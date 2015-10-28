@@ -35,7 +35,7 @@
           </button>
           <a href="/" id="logo">
           	<h1><?php echo lang('app_site_name'); ?></h1>
-          	<h2 class="tsN fwR fsI show">Powered by #Thithi32</h2>
+          	<h2 class="tsN fwR fsI show"><?php echo lang('app_site_slogan'); ?></h2>
           </a>
         </div>
         <div class="navbar-collapse collapse">

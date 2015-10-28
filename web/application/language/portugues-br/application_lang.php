@@ -1,9 +1,10 @@
 <?php
-$app_name = "PhpSandbox";
+$app_name = "Politikei";
 $contact_admin = "Se o problema persistir, por favor entre em contato atraves deste email %s"; 
 $site_url = site_url('');
 
-$lang['app_site_name'] = "PhpSandbox";
+$lang['app_site_name'] = "Politikei";
+$lang['app_site_slogan'] = "O poder do cidadão";
 $lang['app_home'] = "Página Inicial";
 
 /**** Génériques */
