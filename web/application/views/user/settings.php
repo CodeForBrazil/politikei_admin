@@ -52,7 +52,7 @@
 							 <div class="alert-danger"><?php echo form_error('password_confirm'); ?></div>
 						</div>
 					</div>
-					<div class="form-group">
+					<!--div class="form-group">
 						<label class="control-label col-sm-4" for="alias"><?php echo lang('app_alias'); ?></label>
 						<div class="controls col-sm-8">
 							<div class="input-group">
@@ -62,7 +62,7 @@
 							</div>
 							 <div class="alert-danger"><?php echo form_error('alias'); ?></div>
 						</div>
-					</div>
+					</div-->
 					<div class="form-group">
 						<label class="control-label col-sm-4" for="bio"><?php echo lang('app_bio'); ?></label>
 						<div class="controls col-sm-8">
