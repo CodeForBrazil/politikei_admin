@@ -2,9 +2,9 @@
 
 define('UPLOAD_PATH', 'upload/');
 
-$config['sender_email'] = 'politikei@politikei.org';
-$config['contact_email'] = 'guga.guerchon@gmail.com';
-$config['admin_email'] = 'guga.guerchon@gmail.com';
+$config['sender_email'] = 'politikeiapp@gmail.com';
+$config['contact_email'] = 'politikeiapp@gmail.com';
+$config['admin_email'] = 'politikeiapp@gmail.com';
 $config['encode_code_word'] = 'azerty123456';
 $config['default_avatar'] = '/assets/img/avatar.png';
 $config['default_avatar_fake'] = '/assets/img/avatar_fake.png';
