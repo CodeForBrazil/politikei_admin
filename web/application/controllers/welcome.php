@@ -34,16 +34,66 @@ class Welcome extends MY_Controller
 
     public function pesquisar()
     {
+        $sigla = isset($_GET['sigla']) ? trim($_GET['sigla']) : null;
+        $numero = isset($_GET['numero']) ? trim($_GET['numero']) : null;
+        $ano = isset($_GET['ano']) ? trim($_GET['ano']) : null;
+
+        if($sigla == null || $ano == null || $numero == null){
+            $this->load->view('welcome/pesquisar', ['proposicoes' => [], 'sigla' => $sigla, 'numero' => $numero, 'ano' => $ano]);
+            return;
+        }
+
+        $proposicoes = $this->pesquisar_proposicao_camara($sigla, $numero, $ano);
+
+        $this->load->view('welcome/pesquisar', ['sigla' => $sigla, 'numero' => $numero, 'ano' => $ano, 'proposicoes' => $proposicoes]);
+    }
+
+    public function adicionar($idProposicao)
+    {
         $sigla = isset($_GET['sigla']) ? $_GET['sigla'] : null;
         $numero = isset($_GET['numero']) ? $_GET['numero'] : null;
         $ano = isset($_GET['ano']) ? $_GET['ano'] : null;
 
-        if($sigla == null || $ano == null || $numero == null){
-            $this->load->view('welcome/pesquisar', ['proposicoes' => null, 'sigla' => $sigla, 'numero' => $numero, 'ano' => $ano]);
-            return;
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_camara_id($idProposicao);     
+
+        if($proposicao)
+        {
+            $this->session->set_flashdata('errors', ['Proposição já adicionada']);
+            redirect('/welcome/pesquisar?sigla='.$sigla.'&numero='.$numero.'&ano='.$ano, 'refresh');
         }
 
-        $url = "http://www.camara.gov.br/SitCamaraWS/Proposicoes.asmx/ObterProposicao?tipo=".$sigla."&numero=".$numero."&ano=".$ano;
+        $proposicao = $this->obter_proposicao_camara($idProposicao);
+
+        $id = $proposicao->insert();
+
+        $this->session->set_flashdata('messages', ['Proposição adicionada com sucesso']);
+        redirect('/', 'refresh');
+    }
+
+
+    private function obter_proposicao_camara($id)
+    {
+        $xml = $this->chama_web_service('ObterProposicaoPorID?IdProp='.$id);
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_from_xml_camara($xml);
+        return $proposicao;
+    }
+
+
+    private function pesquisar_proposicao_camara($sigla, $numero, $ano)
+    {
+        $xml = $this->chama_web_service('ObterProposicao?tipo='.$sigla.'&numero='.$numero.'&ano='.$ano);
+        $this->load->model('Proposicao_model');
+        $proposicoes = $this->Proposicao_model->list_from_xml_camara($xml);
+
+        return  $proposicoes;
+    }
+
+
+    private function chama_web_service($path)
+    {
+        $url = 'http://www.camara.gov.br/SitCamaraWS/Proposicoes.asmx/'.$path;
         $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
 
         $options = array(
@@ -70,8 +120,9 @@ class Welcome extends MY_Controller
         $header  = curl_getinfo( $ch );
         curl_close( $ch );
 
-        $this->load->view('welcome/pesquisar', ['sigla' => $sigla, 'numero' => $numero, 'ano' => $ano, 'proposicoes' => $content]);
+        return $content;
     }
+
 
     /**
      * Page displaying the current theme.

@@ -86,6 +86,26 @@
       </div>
     </div>
 
+    <?php 
+    	$flashErrors=$this->session->flashdata('errors');
+    	if(!empty($flashErrors))
+    	{
+			$errors = empty($errors) ? $flashErrors : array_merge($this->session->flashdata('errors'), $errors);
+    	}
+
+    	$flashMessages=$this->session->flashdata('messages');
+    	if(!empty($flashMessages))
+    	{
+			$messages = empty($messages) ? $flashMessages : array_merge($this->session->flashdata('messages'), $messages);
+    	}
+    	
+    	$flashDebug=$this->session->flashdata('debug');
+    	if(!empty($flashDebug))
+    	{
+			$debug = empty($debug) ? $flashDebug : array_merge($this->session->flashdata('debug'), $debug);
+    	}
+    ?>
+
 	<?php if ( ! empty($errors)) : ?>
 	<div class="container">
 		<div class="alert alert-danger alert-dismissable">

@@ -51,21 +51,15 @@
     </div>
     <div class="row">
         <ul>
-            <?php 
-            	if($proposicoes != null) {
-
-            	$xml = new SimpleXMLElement($proposicoes);
-				foreach ($xml->xpath('//proposicao') as $item) : ?>
-                <li>
-                    <h3><?php echo $item->nomeProposicao ."\n"; ?></h3>
-                    <div class="btn btn-info" data-toggle="modal" data-target="#novoProjetoModal">Adicionar</div>
-                    <p>
-                        <?php echo $item->Ementa ."\n"; ?>
-                    </p>
-                </li>
-                <?php endforeach; ?>
-                <?php } ?>
-
+            <?php foreach ($proposicoes as $proposicao) : ?>
+            <li>
+                <h3><?php echo $proposicao->nome ."\n"; ?></h3>
+            	<a href="<?= site_url('/welcome/adicionar/'.$proposicao->camaraId.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-info post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
+                <p>
+                    <?php echo $proposicao->descricao ."\n"; ?>
+                </p>
+            </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 </div>

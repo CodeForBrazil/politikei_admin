@@ -29,4 +29,43 @@ $(document).ready( function() {
     	window.location.href = $(this).attr('data-goto');
     });
 
+
+    // Configuração de botões que utilizam POST
+    var postHandler = function (event) {
+        event.preventDefault();
+
+        if ($(this).data('confirm')) {
+            confirmModal.find('.modal-body').text($(this).data('confirm'));
+            confirmModal.find('.modal-footer a.confirm').attr('href', $(this).attr('href'));
+            confirmModal.modal();
+            return;
+        }
+
+        var form = $('<form>');
+        form.attr('action', $(this).attr('href'));
+        form.attr('method', 'post');
+
+        $("body").append(form);
+        form.submit();
+    }
+
+    var confirmModal = $('<div class="modal "> \
+                    <div class="modal-dialog"> \
+                      <div class="modal-content">\
+                        <div class="modal-header">\
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                          <h4 class="modal-title">Confirmação</h4>\
+                        </div>\
+                        <div class="modal-body">\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a class="btn btn-default" data-dismiss="modal">Não</a>\
+                          <a href="#" class="btn btn-primary confirm post-link">Sim</a>\
+                        </div>\
+                      </div>\
+                    </div>\
+                  </div>');
+
+    $('body').on('click', '.post-link', postHandler);
+    confirmModal.on('click', '.post-link', postHandler);
 });
