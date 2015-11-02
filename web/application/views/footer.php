@@ -46,7 +46,7 @@
     </script>
 <?php endif; ?>
 
-<?php if (defined('ENVIRONMENT') && in_array(ENVIRONMENT,array('development'))) $this->output->enable_profiler(TRUE); ?>
+<?php if (defined('ENVIRONMENT') && in_array(ENVIRONMENT,array('development'))) $this->output->enable_profiler(FALSE); ?>
     
   </body>
 </html>

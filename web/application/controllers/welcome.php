@@ -4,6 +4,20 @@
 
 class Welcome extends MY_Controller
 {
+    protected $before_filter = array('action' => 'authorize');
+
+    public function authorize()
+    {
+        $called_action = $this->router->fetch_method();
+        $user = $this->get_currentuser();
+        if($called_action != 'index' && !$user)
+        {
+            redirect(base_url());
+        }
+
+        $is_admin = $user->roles == User_model::ROLE_ADMIN;
+    }
+
 
     /**
      * Index Page for this controller.
@@ -21,7 +35,7 @@ class Welcome extends MY_Controller
 
         $this->load->model('Proposicao_model');
         $proposicoes = $this->Proposicao_model->get_all();
-        
+
         $user = $this->get_currentuser();
         $admin = $user->is(User_model::ROLE_ADMIN);
         
@@ -30,7 +44,6 @@ class Welcome extends MY_Controller
 
         $this->load->view('welcome/index', $this->get_data());
     }
-
 
     public function pesquisar()
     {
@@ -122,7 +135,6 @@ class Welcome extends MY_Controller
 
         return $content;
     }
-
 
     /**
      * Page displaying the current theme.
