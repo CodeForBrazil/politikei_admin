@@ -518,6 +518,20 @@ class MY_Controller extends CI_Controller
         is_string($key) and $this->_data[$key] = $value;
     }
 
+
+    /**
+     * Sets an array of data to send to view.
+     *
+     * @param array $values
+     * @return void
+     */
+    protected function set_data_array($values)
+    {
+        foreach ($values as $key => $value) {
+            is_string($key) and $this->_data[$key] = $value; 
+        }
+    }
+
     /**
      * Outputs an object or array in JSON format with HTTP headers.
      *

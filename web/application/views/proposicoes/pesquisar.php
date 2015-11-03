@@ -41,7 +41,7 @@
                         <button type="submit" class="btn btn-danger">
                             Pesquisar
                         </button>
-                        <a href="<?= site_url('/') ?>" class="btn btn-default">
+                        <a href="<?= site_url('/proposicoes') ?>" class="btn btn-default">
                             Voltar
                         </a>
                     </div>
@@ -54,7 +54,7 @@
             <?php foreach ($proposicoes as $proposicao) : ?>
             <li>
                 <h3><?php echo $proposicao->nome ."\n"; ?></h3>
-            	<a href="<?= site_url('/welcome/adicionar/'.$proposicao->camaraId.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-info post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
+            	<a href="<?= site_url('/proposicoes/adicionar/'.$proposicao->camara_id.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-info post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
                 <p>
                     <?php echo $proposicao->descricao ."\n"; ?>
                 </p>
