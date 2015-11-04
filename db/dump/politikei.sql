@@ -9,15 +9,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema politikei
+-- Table `usuarios`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `politikei` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `politikei` ;
-
--- -----------------------------------------------------
--- Table `politikei`.`usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`usuarios` (
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(100) NOT NULL COMMENT '',
   `email` VARCHAR(100) NOT NULL COMMENT '',
@@ -36,9 +30,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`partidos`
+-- Table `partidos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`partidos` (
+CREATE TABLE IF NOT EXISTS `partidos` (
   `sigla` VARCHAR(8) NOT NULL COMMENT '',
   `nome` VARCHAR(100) NOT NULL COMMENT '',
   PRIMARY KEY (`sigla`)  COMMENT '')
@@ -48,9 +42,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`parlamentares`
+-- Table `parlamentares`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`parlamentares` (
+CREATE TABLE IF NOT EXISTS `parlamentares` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(100) NOT NULL COMMENT '',
   `estado` VARCHAR(2) NULL COMMENT '',
@@ -59,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `politikei`.`parlamentares` (
   INDEX `fk_Parlamentares_Partidos_idx` (`partido_sigla` ASC)  COMMENT '',
   CONSTRAINT `fk_Parlamentares_Partidos`
     FOREIGN KEY (`partido_sigla`)
-    REFERENCES `politikei`.`partidos` (`sigla`)
+    REFERENCES `partidos` (`sigla`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -68,9 +62,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`coligacoes`
+-- Table `coligacoes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`coligacoes` (
+CREATE TABLE IF NOT EXISTS `coligacoes` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(60) NULL COMMENT '',
   `uf` VARCHAR(2) NULL COMMENT '',
@@ -81,9 +75,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`partidos_coligacoes`
+-- Table `partidos_coligacoes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`partidos_coligacoes` (
+CREATE TABLE IF NOT EXISTS `partidos_coligacoes` (
   `sigla` VARCHAR(8) NOT NULL COMMENT '',
   `id_coligacao` INT NOT NULL COMMENT '',
   PRIMARY KEY (`sigla`, `id_coligacao`)  COMMENT '',
@@ -91,12 +85,12 @@ CREATE TABLE IF NOT EXISTS `politikei`.`partidos_coligacoes` (
   INDEX `fk_Partidos_has_Coligacao_Partidos1_idx` (`sigla` ASC)  COMMENT '',
   CONSTRAINT `fk_Partidos_has_Coligacao_Partidos1`
     FOREIGN KEY (`sigla`)
-    REFERENCES `politikei`.`partidos` (`sigla`)
+    REFERENCES `partidos` (`sigla`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Partidos_has_Coligacao_Coligacao1`
     FOREIGN KEY (`id_coligacao`)
-    REFERENCES `politikei`.`coligacoes` (`id`)
+    REFERENCES `coligacoes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -105,9 +99,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`palamentares_favoritos`
+-- Table `palamentares_favoritos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`palamentares_favoritos` (
+CREATE TABLE IF NOT EXISTS `palamentares_favoritos` (
   `usuario_id` INT NOT NULL COMMENT '',
   `id_parlamentar` INT NOT NULL COMMENT '',
   PRIMARY KEY (`usuario_id`, `id_parlamentar`)  COMMENT '',
@@ -115,12 +109,12 @@ CREATE TABLE IF NOT EXISTS `politikei`.`palamentares_favoritos` (
   INDEX `fk_Usuario_has_Parlamentares_Usuario1_idx` (`usuario_id` ASC)  COMMENT '',
   CONSTRAINT `fk_Usuario_has_Parlamentares_Usuario1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `politikei`.`usuarios` (`id`)
+    REFERENCES `usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario_has_Parlamentares_Parlamentares1`
     FOREIGN KEY (`id_parlamentar`)
-    REFERENCES `politikei`.`parlamentares` (`id`)
+    REFERENCES `parlamentares` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -129,9 +123,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`categorias`
+-- Table `categorias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`categorias` (
+CREATE TABLE IF NOT EXISTS `categorias` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `nome` VARCHAR(50) NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '')
@@ -141,9 +135,9 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`projetos`
+-- Table `proposicoes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`projetos` (
+CREATE TABLE IF NOT EXISTS `proposicoes` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `parlamentar_id` INT NOT NULL COMMENT '',
   `categoria_id` INT NOT NULL COMMENT '',
@@ -154,12 +148,12 @@ CREATE TABLE IF NOT EXISTS `politikei`.`projetos` (
   INDEX `fk_Projetos_Categorias1_idx` (`categoria_id` ASC)  COMMENT '',
   CONSTRAINT `fk_Projetos_Parlamentares1`
     FOREIGN KEY (`parlamentar_id`)
-    REFERENCES `politikei`.`parlamentares` (`id`)
+    REFERENCES `parlamentares` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Projetos_Categorias1`
     FOREIGN KEY (`categoria_id`)
-    REFERENCES `politikei`.`categorias` (`id`)
+    REFERENCES `categorias` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -168,25 +162,25 @@ COLLATE = latin1_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `politikei`.`votos`
+-- Table `votos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `politikei`.`votos` (
+CREATE TABLE IF NOT EXISTS `votos` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `usuario_id` INT NOT NULL COMMENT '',
-  `projeto_id` INT NOT NULL COMMENT '',
+  `proposicao_id` INT NOT NULL COMMENT '',
   `voto` VARCHAR(1) NOT NULL COMMENT '',
   `data_voto` VARCHAR(10) NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
   INDEX `fk_Votos_Usuario1_idx` (`usuario_id` ASC)  COMMENT '',
-  INDEX `fk_Votos_Projetos1_idx` (`projeto_id` ASC)  COMMENT '',
+  INDEX `fk_Votos_Projetos1_idx` (`proposicao_id` ASC)  COMMENT '',
   CONSTRAINT `fk_Votos_Usuario1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `politikei`.`usuarios` (`id`)
+    REFERENCES `usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Votos_Projetos1`
-    FOREIGN KEY (`projeto_id`)
-    REFERENCES `politikei`.`projetos` (`id`)
+    FOREIGN KEY (`proposicao_id`)
+    REFERENCES `proposicoes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
