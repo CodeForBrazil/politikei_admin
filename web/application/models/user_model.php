@@ -12,7 +12,7 @@ class User_model extends MY_Model
     /**
      * Table name.
      */
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = 'users';
     const ACTIVITY_TABLE_NAME = 'activity';
 
     // Roles
