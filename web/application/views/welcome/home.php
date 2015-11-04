@@ -29,24 +29,6 @@
 						Já tem um conta?
 						<a href="#login" data-toggle="modal" data-target="#loginModal">Clique aqui</a>.
 					</p>
-				<?php else: ?>
-					
-					
-					<ul>
-						<?php 
-							$xml = new SimpleXMLElement($proposicoes);
-						
-							foreach ($xml->xpath('//proposicao') as $item) : ?>
-						<li>
-							<h3><?php echo $item->nome ."\n"; ?></h3>
-							<div class="btn btn-info" data-toggle="modal" data-target="#novoProjetoModal">Publicar</div>
-							<p>
-								<?php echo $item->txtEmenta ."\n"; ?>
-							</p>
-						</li>
-						<?php endforeach; ?>
-					</ul>
-					
 					
 				<?php endif;?>
 
