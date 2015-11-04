@@ -6,9 +6,9 @@ $config['sender_email'] = 'politikei@politikei.org';
 $config['contact_email'] = 'guga.guerchon@gmail.com';
 $config['admin_email'] = 'guga.guerchon@gmail.com';
 $config['encode_code_word'] = 'azerty123456';
-$config['default_avatar'] = '/assets/img/avatar.png';
-$config['default_avatar_fake'] = '/assets/img/avatar_fake.png';
-$config['default_image'] = '/assets/img/image.png';
+$config['default_avatar'] = base_url('/assets/img/avatar.png');
+$config['default_avatar_fake'] = base_url('/assets/img/avatar_fake.png');
+$config['default_image'] = base_url('/assets/img/image.png');
 
 $config['available_languages'] = array('pt' => 'portugues-br'); //, 'en' => 'english');
 $config['available_locales'] = array('pt' => 'pt_BR'); //, 'en' => 'en_US');

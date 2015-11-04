@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="/" id="logo">
+          <a href="<?= base_url() ?>" id="logo">
           	<h1><?php echo lang('app_site_name'); ?></h1>
           	<h2 class="tsN fwR fsI show"><?php echo lang('app_site_slogan'); ?></h2>
           </a>
@@ -85,6 +85,26 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+
+    <?php 
+    	$flashErrors=$this->session->flashdata('errors');
+    	if(!empty($flashErrors))
+    	{
+			$errors = empty($errors) ? $flashErrors : array_merge($this->session->flashdata('errors'), $errors);
+    	}
+
+    	$flashMessages=$this->session->flashdata('messages');
+    	if(!empty($flashMessages))
+    	{
+			$messages = empty($messages) ? $flashMessages : array_merge($this->session->flashdata('messages'), $messages);
+    	}
+    	
+    	$flashDebug=$this->session->flashdata('debug');
+    	if(!empty($flashDebug))
+    	{
+			$debug = empty($debug) ? $flashDebug : array_merge($this->session->flashdata('debug'), $debug);
+    	}
+    ?>
 
 	<?php if ( ! empty($errors)) : ?>
 	<div class="container">
