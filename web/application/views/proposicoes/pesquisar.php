@@ -56,7 +56,7 @@
                 <h3><?php echo $proposicao->nome ."\n"; ?></h3>
             	<a href="<?= site_url('/proposicoes/adicionar/'.$proposicao->camara_id.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-info post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
                 <p>
-                    <?php echo $proposicao->descricao ."\n"; ?>
+                    <?php echo $proposicao->ementa ."\n"; ?>
                 </p>
             </li>
             <?php endforeach; ?>

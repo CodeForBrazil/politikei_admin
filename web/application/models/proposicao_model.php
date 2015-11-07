@@ -5,7 +5,7 @@ class Proposicao_model extends MY_Model {
     const TABLE_NAME = 'proposicoes';
 
     var $nome;
-    var $descricao;
+    var $ementa;
     var $id;
     var $camara_id;
 
@@ -39,7 +39,7 @@ class Proposicao_model extends MY_Model {
         foreach ($xml->xpath('//proposicao') as $item) {
             $model = new Proposicao_model();
             $model->nome = (string) $item->nomeProposicao;
-            $model->descricao = (string) $item->Ementa;
+            $model->ementa = (string) $item->Ementa;
             $model->camara_id = (int) $item->idProposicao;
 
             array_push($models, $model);

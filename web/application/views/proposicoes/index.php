@@ -14,7 +14,7 @@
                 <h3><?php echo $proposicao->nome ."\n"; ?></h3>
                 <div class="btn btn-info" data-toggle="modal" data-target="#novoProjetoModal">Publicar</div>
                 <p>
-                    <?php echo $proposicao->descricao ."\n"; ?>
+                    <?php echo $proposicao->ementa ."\n"; ?>
                 </p>
             </li>
         <?php endforeach; ?>
