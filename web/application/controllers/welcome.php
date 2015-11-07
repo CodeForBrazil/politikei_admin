@@ -4,9 +4,6 @@
 
 class Welcome extends MY_Controller
 {
-    /**
-     * Index Page for this controller.
-     */
     public function index()
     {
         if (isset($_GET['from'])) {
@@ -21,34 +18,9 @@ class Welcome extends MY_Controller
        redirect(base_url('/proposicoes'));
     }
 
-    /**
-     * Page displaying the current theme.
-     */
-    public function theme()
-    {
-        $this->load->view('welcome/theme');
-    }
-
-    /**
-     * Page with todo list.
-     */
-    public function todo()
-    {
-        $this->load->view('welcome/todo');
-    }
-
-    /**
-     * Sign out action.
-     *
-     * @return void
-     */
     public function out()
     {
         $this->session->sess_destroy();
         redirect('/');
     }
-
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
