@@ -32,6 +32,6 @@ ALTER TABLE `partidos_coligacoes` CHANGE `id_coligacao` `coligacao_id` INT(11)  
 
 ALTER TABLE `palamentares_favoritos` CHANGE `usuario_id` `user_id` INT(11)  NOT NULL;
 
-ALTER TABLE `palamentares_favoritos` CHANGE `parlamentar` `parlamentar_id` INT(11)  NOT NULL;
+ALTER TABLE `palamentares_favoritos` CHANGE `id_parlamentar` `parlamentar_id` INT(11)  NOT NULL;
 
 DROP TABLE `usuarios`;
