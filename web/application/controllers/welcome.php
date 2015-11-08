@@ -15,7 +15,7 @@ class Welcome extends MY_Controller
             return;
         }
 
-       //redirect(base_url('/proposicoes'));
+       redirect(base_url('/proposicoes'));
     }
 
     public function out()
