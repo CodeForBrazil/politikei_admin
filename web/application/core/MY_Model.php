@@ -106,8 +106,16 @@ class MY_Model extends CI_Model
     {
         $class = get_class($this);
         $rows = $query->num_rows();
-        print_r('total rows:'. $rows);
-        return $rows > 0 ? new $class(array_shift($query->result())) : null;
+        
+        $result = $query->result();
+        print_r('result:');
+        print_r($result);
+
+        $object = new $class(array_shift($result));
+        print_r('convertido:');
+        print_r($object);
+
+        return $rows > 0 ? $object : null;
     }
 
     /**
