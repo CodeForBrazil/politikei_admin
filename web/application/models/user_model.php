@@ -188,6 +188,7 @@ class User_model extends MY_Model
     public function get_by_email($email)
     {
         $query = $this->db->get_where(self::TABLE_NAME, array('email' => $email));
+        print_r($query);
         return $this->get_first_self_result($query);
     }
 
