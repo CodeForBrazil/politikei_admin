@@ -320,11 +320,8 @@ class MY_Controller extends CI_Controller
         $this->load->model('User_model');
         $user = $this->User_model->get_by_email($email);
         $password = $this->User_model->encrypt_password($password);
-        print_r('-');
-        print_r($password);
-        print_r('-');
-        print_r($user->password);
-        print_r('-');
+        print_r($user);
+        print_r($email);
         if (!is_null($user) && ($password === $user->password)) {
             $this->set_currentuser($user);
             return $user;
