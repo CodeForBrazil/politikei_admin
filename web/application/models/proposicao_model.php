@@ -15,7 +15,7 @@ class Proposicao_model extends MY_Model {
     var $resumo;
     var $colaborador_id;
 
-    var $colaborador;
+    private $colaborador = null;
 
     const STATUS_DISPONIVEL = 0;
     const STATUS_DESATIVADA = 1;
