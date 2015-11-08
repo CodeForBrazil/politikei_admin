@@ -23,6 +23,7 @@ class Proposicoes extends MY_Controller
 
         $this->is_admin = $is_admin;
         $this->set_data('is_admin', $is_admin);
+        $this->set_data('user', $user);
     }
 
     public function index()
@@ -97,6 +98,47 @@ class Proposicoes extends MY_Controller
         $proposicao->update();
 
         $this->session->set_flashdata('messages', ['Proposição ativada com sucesso']);
+        redirect(base_url('/proposicoes'));
+    }
+
+    public function reservar($id)
+    {
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_id($id);
+
+        if(!$proposicao->pode_reservar($this->errors))
+        {
+            $this->session->set_flashdata('errors', $this->errors);
+            return redirect(base_url('/proposicoes'));
+        }
+        
+        $user = $this->get_currentuser();
+        $proposicao->reservar($user);
+        $proposicao->update();
+
+        $this->session->set_flashdata('messages', ['Proposição reservada com sucesso']);
+        //ir para resumo
+        redirect(base_url('/proposicoes'));
+    }
+
+
+    public function liberar($id)
+    {
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_id($id);
+
+        $user = $this->get_currentuser();
+        if(!$proposicao->pode_liberar($user, $this->errors))
+        {
+            $this->session->set_flashdata('errors', $this->errors);
+            return redirect(base_url('/proposicoes'));
+        }
+        
+        $proposicao->liberar($user);
+        $proposicao->update();
+
+        $this->session->set_flashdata('messages', ['Proposição liberada com sucesso']);
+        //ir para resumo
         redirect(base_url('/proposicoes'));
     }
 }

@@ -61,6 +61,12 @@ class User_model extends MY_Model
         return $name;
     }
 
+    public function get_name_or_email()
+    {
+        $name = $this->get_name();
+        return $name == self::NO_NAME ? $this->email : $this->name;
+    }
+
     /**
      * Returns user url
      */

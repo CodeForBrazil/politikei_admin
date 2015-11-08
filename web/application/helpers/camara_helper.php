@@ -6,20 +6,15 @@ if ( ! defined('BASEPATH'))
 
 function obter_proposicao_camara($id)
 {
-    $ci = get_instance();   
     $xml = chama_web_service('ObterProposicaoPorID?IdProp='.$id);
-    $ci->load->model('Proposicao_model');
-    $proposicao = $ci->Proposicao_model->get_from_xml_camara($xml);
+    $proposicao = get_from_xml_camara($xml);
     return $proposicao;
 }
 
 function pesquisar_proposicao_camara($sigla, $numero, $ano)
 {
     $xml = chama_web_service('ObterProposicao?tipo='.$sigla.'&numero='.$numero.'&ano='.$ano);
-    $ci = get_instance();   
-    $ci->load->model('Proposicao_model');
-    $proposicoes = $ci->Proposicao_model->list_from_xml_camara($xml);
-
+    $proposicoes = list_from_xml_camara($xml);
     return  $proposicoes;
 }
 
@@ -53,4 +48,40 @@ function chama_web_service($path)
     curl_close( $ch );
 
     return $content;
+}
+
+
+function list_from_xml_camara($content)
+{
+    $models = [];
+    if($content == null) 
+    {
+        return $models;
+    }
+
+    $ci = get_instance();   
+    $ci->load->model('Proposicao_model');
+    $xml = new SimpleXMLElement($content);
+    foreach ($xml->xpath('//proposicao') as $item) {
+        $model = new $ci->Proposicao_model;
+        $model->nome = (string) $item->nomeProposicao;
+        $model->ementa = (string) $item->Ementa;
+        $model->camara_id = (int) $item->idProposicao;
+        $model->situacao = Proposicao_model::STATUS_DISPONIVEL;
+
+        array_push($models, $model);
+    }
+    
+    return $models;
+}
+
+function get_from_xml_camara($content)
+{
+    $models = list_from_xml_camara($content);
+    if(empty($models))
+    {
+        return null;
+    }
+
+    return array_pop($models);
 }

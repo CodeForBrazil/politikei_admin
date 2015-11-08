@@ -4,11 +4,18 @@ class Proposicao_model extends MY_Model {
 
     const TABLE_NAME = 'proposicoes';
 
+    var $id;
     var $nome;
     var $ementa;
-    var $id;
+    
     var $camara_id;
     var $situacao;
+    
+    var $descricao;
+    var $resumo;
+    var $colaborador_id;
+
+    var $colaborador;
 
     const STATUS_DISPONIVEL = 0;
     const STATUS_DESATIVADA = 1;
@@ -19,7 +26,6 @@ class Proposicao_model extends MY_Model {
     {
         $this->TABLE_NAME = self::TABLE_NAME;
         parent::__construct($data);
-
     }
     
     public function get_all()
@@ -40,6 +46,19 @@ class Proposicao_model extends MY_Model {
         return $this->get_first_self_result($query);
     }
 
+    public function get_colaborador()
+    {
+        if(!$this->colaborador)
+        {
+            //TODO: rever melhor opção para esta busca
+            $ci =& get_instance();
+            $ci->load->model('User_model');
+            $this->colaborador = $ci->User_model->get_by_id($this->colaborador_id);
+        }
+
+        return $this->colaborador;   
+    }
+
     public function desativar()
     {
         $this->situacao = self::STATUS_DESATIVADA;
@@ -47,7 +66,7 @@ class Proposicao_model extends MY_Model {
 
     public function ativar()
     {
-        //TODO: quando tiver alguem colaborando, mudar para reservada
+        //TODO: quando tiver alguem colaborando, ver se deve mudar para reservada
         $this->situacao = self::STATUS_DISPONIVEL;
     }
 
@@ -56,36 +75,58 @@ class Proposicao_model extends MY_Model {
         return $this->situacao != self::STATUS_DESATIVADA;
     }
 
-    public function list_from_xml_camara($content)
+    public function is_reservada()
     {
-        $models = [];
-        if($content == null) 
-        {
-            return $models;
-        }
-
-        $xml = new SimpleXMLElement($content);
-        foreach ($xml->xpath('//proposicao') as $item) {
-            $model = new Proposicao_model();
-            $model->nome = (string) $item->nomeProposicao;
-            $model->ementa = (string) $item->Ementa;
-            $model->camara_id = (int) $item->idProposicao;
-            $model->situacao = self::STATUS_DISPONIVEL;
-
-            array_push($models, $model);
-        }
-        
-        return $models;
+        return $this->situacao == self::STATUS_RESERVADA;
     }
 
-    public function get_from_xml_camara($content)
+    public function pode_reservar(&$errors)
     {
-        $models = $this->list_from_xml_camara($content);
-        if(empty($models))
+        $errors = [];
+        if($this->situacao != self::STATUS_DISPONIVEL)
         {
-            return null;
+            $errors[] = 'Proposição em situação inválida para reservar';
+            return false;
+        }
+        return true;
+    }
+
+    public function reservar($user)
+    {
+        $errors = [];
+        if(!$this->pode_reservar($errors))
+        {
+            throw new Exception(join(',', $errors));
         }
 
-        return array_pop($models);
+        $this->colaborador_id = $user->id;
+        $this->situacao = self::STATUS_RESERVADA;
+    }
+
+    public function pode_liberar($user, &$errors)
+    {
+        $errors = [];
+        if($this->situacao != self::STATUS_RESERVADA)
+        {
+            $errors[] = 'Proposição em situação inválida para liberar';
+        }
+        if($this->colaborador_id != $user->id && !$user->is(User_model::ROLE_ADMIN))
+        {
+            $errors[] = 'Apenas o colaborar dono da reserva pode liberar esta proposição';
+        }
+
+        return empty($errors);
+    }
+
+    public function liberar($user)
+    {
+        $errors = [];
+        if(!$this->pode_liberar($user, $errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->colaborador_id = $user->id;
+        $this->situacao = self::STATUS_DISPONIVEL;
     }
 }
