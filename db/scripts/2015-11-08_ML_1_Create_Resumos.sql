@@ -1,4 +1,4 @@
-alter table `users` MODIFY `id` INT NOT NULL;
+alter table `users` MODIFY `id` INT  NOT NULL AUTO_INCREMENT;
 
 alter table `proposicoes` ADD `descricao` varchar(255) NULL;
 alter table `proposicoes` ADD `colaborador_id` int NULL;
