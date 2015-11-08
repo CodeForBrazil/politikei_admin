@@ -206,15 +206,11 @@ class MY_Controller extends CI_Controller
                         $password = $this->input->post('login_password');
 
                         if ($current_user = $this->login($email, $password)) {
-                            print_r('user ok');
                             if (isset($_GET['from']) && ($redirect = $_GET['from'])) {
-                                print_r('redirect');
                                 redirect($redirect);
                             }
-                            print_r('not redirect');
 
                         }
-                        print_r('user not ok');
                     }
                     if (!$current_user) {
                         $this->set_data('open_modal', 'login');
@@ -324,13 +320,15 @@ class MY_Controller extends CI_Controller
         $this->load->model('User_model');
         $user = $this->User_model->get_by_email($email);
         $password = $this->User_model->encrypt_password($password);
-
+        print_r('-');
+        print_r($password);
+        print_r('-');
+        print_r($user->password);
+        print_r('-');
         if (!is_null($user) && ($password === $user->password)) {
-            print_r('password match');
             $this->set_currentuser($user);
             return $user;
         }
-        print_r('password not match');
         return false;
     }
 
