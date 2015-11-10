@@ -147,17 +147,17 @@ class Proposicoes extends MY_Controller
         $this->load->model('Proposicao_model');
         $proposicao = $this->Proposicao_model->get_by_id($id);
 
+        if($this->is_get())
+        {
+            $this->set_data('proposicao', $proposicao);
+            return $this->load->view('proposicoes/resumo', $this->get_data());
+        }
+
         $user = $this->get_currentuser();
         if(!$proposicao->pode_editar_resumo($user, $this->errors))
         {
             $this->session->set_flashdata('errors', $this->errors);
             return redirect(base_url('/proposicoes'));
-        }
-
-        if($this->is_get())
-        {
-            $this->set_data('proposicao', $proposicao);
-            return $this->load->view('proposicoes/resumo', $this->get_data());
         }
 
         $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
@@ -168,5 +168,24 @@ class Proposicoes extends MY_Controller
 
         $this->session->set_flashdata('messages', ['Resumo alterado com sucesso']);
         redirect(base_url('/proposicoes/resumo/'.$id));
+    }
+
+    public function publicar($id)
+    {
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_id($id);
+
+        $user = $this->get_currentuser();
+        if(!$proposicao->pode_publicar($user, $this->errors))
+        {
+            $this->session->set_flashdata('errors', $this->errors);
+            return redirect(base_url('/proposicoes'));
+        }
+        
+        $proposicao->publicar($user);
+        $proposicao->update();
+
+        $this->session->set_flashdata('messages', ['Proposição publicada com sucesso']);
+        redirect(base_url('/proposicoes'));
     }
 }

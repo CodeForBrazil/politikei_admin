@@ -12,6 +12,7 @@
         <?php foreach ($proposicoes as $proposicao) : ?>
             <li>
                 <h3><?php echo $proposicao->nome ."\n"; ?></h3>
+                <p>Situação: <?= $proposicao->get_situacao_desc() ?></p>
                 <p>
                     <?php echo $proposicao->ementa ."\n"; ?>
                 </p>
@@ -33,15 +34,13 @@
                     <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
                     <?php if($proposicao->pode_liberar($user, $errors)): ?>
                     <a href="<?= site_url('/proposicoes/liberar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja liberar esta proposição?">
-                        Liberar reserva
+                        Liberar reserva de resumo
                     </a>
                     <?php endif; ?>
                 <?php endif; ?>
-                <?php if($proposicao->pode_editar_resumo($user, $errors)): ?>
                 <a href="<?= site_url('/proposicoes/resumo/'.$proposicao->id) ?>" class="btn btn-default btn-sm">
-                    Editar resumo
+                    Ver resumo do app
                 </a>
-                <?php endif; ?>
             </li>
             <?php endforeach; ?>
     </ul>

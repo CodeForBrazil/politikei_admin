@@ -22,6 +22,15 @@ class Proposicao_model extends MY_Model {
     const STATUS_RESERVADA = 2;
     const STATUS_PUBLICADA = 3;
 
+
+    private $sitaucao_desc = 
+    [
+        0 => "Disponível",
+        1 => "Desativada",
+        2 => "Reservada",
+        3 => "Publicada"
+    ];
+
     function __construct($data = array())
     {
         $this->TABLE_NAME = self::TABLE_NAME;
@@ -57,6 +66,12 @@ class Proposicao_model extends MY_Model {
         }
 
         return $this->colaborador;   
+    }
+
+
+    public function get_situacao_desc()
+    {
+        return $this->sitaucao_desc[$this->situacao];
     }
 
     public function desativar()
@@ -112,7 +127,7 @@ class Proposicao_model extends MY_Model {
         }
         if($this->colaborador_id != $user->id && !$user->is(User_model::ROLE_ADMIN))
         {
-            $errors[] = 'Apenas o colaborar dono da reserva pode liberar esta proposição';
+            $errors[] = 'Apenas o colaborador dono da reserva pode liberar esta proposição';
         }
 
         return empty($errors);
@@ -139,7 +154,7 @@ class Proposicao_model extends MY_Model {
         }
         if($this->colaborador_id != $user->id && !$user->is(User_model::ROLE_ADMIN))
         {
-            $errors[] = 'Apenas o colaborar dono da reserva pode editar o reseumo desta proposição';
+            $errors[] = 'Apenas o colaborador dono da reserva pode editar o reseumo desta proposição';
         }
 
         return empty($errors);
@@ -155,5 +170,38 @@ class Proposicao_model extends MY_Model {
 
         $this->resumo = $resumo;
         $this->descricao = $descricao;
+    }
+
+    public function pode_publicar($user, &$errors)
+    {
+        $errors = [];
+        if($this->situacao != self::STATUS_RESERVADA)
+        {
+            $errors[] = 'Proposição em situação inválida para publicação';
+        }
+
+        if(empty($this->descricao) || empty($this->resumo))
+        {
+            $errors[] = 'Proposição ainda sem resumo ou descição';
+        }
+
+        if($this->colaborador_id != $user->id && !$user->is(User_model::ROLE_ADMIN))
+        {
+            $errors[] = 'Apenas o colaborador dono da reserva pode publicar esta proposição';
+        }
+
+        return empty($errors);
+    }
+
+
+    public function publicar($user)
+    {
+        $errors = [];
+        if(!$this->pode_publicar($user, $errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->situacao = self::STATUS_PUBLICADA;
     }
 }
