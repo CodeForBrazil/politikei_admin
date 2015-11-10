@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <div class="controls col-sm-6 col-sm-offset-2">
-                        <?php if($proposicao->pode_reservar($errors)): ?>
+                        <?php if($proposicao->pode_editar_resumo($user, $errors)): ?>
                         <button type="submit" class="btn btn-primary">
                             Salvar resumo
                         </button>
