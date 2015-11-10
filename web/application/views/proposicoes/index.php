@@ -26,7 +26,7 @@
                 <?php endif; ?>
                 <?php if($proposicao->pode_reservar($errors)): ?>
                 <a href="<?= site_url('/proposicoes/reservar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja reservar esta proposição?">
-                    Reservar
+                    Reservar para resumo
                 </a>
                 <?php endif; ?>
                 <?php if($proposicao->is_reservada()): ?>
@@ -37,7 +37,11 @@
                     </a>
                     <?php endif; ?>
                 <?php endif; ?>
-
+                <?php if($proposicao->pode_editar_resumo($user, $errors)): ?>
+                <a href="<?= site_url('/proposicoes/resumo/'.$proposicao->id) ?>" class="btn btn-default btn-sm">
+                    Editar resumo
+                </a>
+                <?php endif; ?>
             </li>
             <?php endforeach; ?>
     </ul>

@@ -129,4 +129,31 @@ class Proposicao_model extends MY_Model {
         $this->colaborador_id = $user->id;
         $this->situacao = self::STATUS_DISPONIVEL;
     }
+
+    public function pode_editar_resumo($user, &$errors)
+    {
+        $errors = [];
+        if($this->situacao != self::STATUS_RESERVADA)
+        {
+            $errors[] = 'Proposição em situação inválida para edição do resumo';
+        }
+        if($this->colaborador_id != $user->id && !$user->is(User_model::ROLE_ADMIN))
+        {
+            $errors[] = 'Apenas o colaborar dono da reserva pode editar o reseumo desta proposição';
+        }
+
+        return empty($errors);
+    }
+
+    public function editar_resumo($user, $resumo, $descricao)
+    {
+        $errors = [];
+        if(!$this->pode_editar_resumo($user, $errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->resumo = $resumo;
+        $this->descricao = $descricao;
+    }
 }

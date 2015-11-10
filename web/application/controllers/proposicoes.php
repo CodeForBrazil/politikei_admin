@@ -117,8 +117,7 @@ class Proposicoes extends MY_Controller
         $proposicao->update();
 
         $this->session->set_flashdata('messages', ['Proposição reservada com sucesso']);
-        //ir para resumo
-        redirect(base_url('/proposicoes'));
+        redirect(base_url('/proposicoes/resumo/'.$id));
     }
 
 
@@ -138,7 +137,36 @@ class Proposicoes extends MY_Controller
         $proposicao->update();
 
         $this->session->set_flashdata('messages', ['Proposição liberada com sucesso']);
-        //ir para resumo
         redirect(base_url('/proposicoes'));
+    }
+
+
+    public function resumo($id)
+    {
+
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_id($id);
+
+        $user = $this->get_currentuser();
+        if(!$proposicao->pode_editar_resumo($user, $this->errors))
+        {
+            $this->session->set_flashdata('errors', $this->errors);
+            return redirect(base_url('/proposicoes'));
+        }
+
+        if($this->is_get())
+        {
+            $this->set_data('proposicao', $proposicao);
+            return $this->load->view('proposicoes/resumo', $this->get_data());
+        }
+
+        $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : null;
+        $resumo = isset($_POST['resumo']) ? $_POST['resumo'] : null;
+
+        $proposicao->editar_resumo($user, $resumo, $descricao);
+        $proposicao->update();
+
+        $this->session->set_flashdata('messages', ['Resumo alterado com sucesso']);
+        redirect(base_url('/proposicoes/resumo/'.$id));
     }
 }
