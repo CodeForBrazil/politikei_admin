@@ -555,6 +555,17 @@ class MY_Controller extends CI_Controller
         $this->load->library('user_agent');
         redirect(($this->agent->is_referral()) ? $this->agent->referrer() : $url);
     }
+
+
+    protected function render($view, $data = null)
+    {
+        $view_data = $this->get_data();
+        if(is_array($data))
+        {
+            $view_data = array_merge($view_data, $data);
+        }
+        $this->load->view($view, $view_data);
+    }
 }
 
 /* End of file MY_Controller.php */

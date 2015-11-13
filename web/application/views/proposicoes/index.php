@@ -2,7 +2,9 @@
 <div class="container" role="main">
     <h2>Proposições disponíveis</h2>
     <?php if($is_admin): ?>
-    
+    <a href="<?= site_url('/users') ?>" class="btn btn-default">
+        Usuários
+    </a>
     <a href="<?= site_url('/proposicoes/pesquisar') ?>" class="btn btn-default">
         Adicionar nova
     </a>
@@ -32,7 +34,7 @@
                 <?php endif; ?>
                 <?php if($proposicao->is_reservada()): ?>
                     <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
-                    <?php if($proposicao->pode_liberar($user, $errors)): ?>
+                    <?php if($proposicao->pode_liberar($current_user, $errors)): ?>
                     <a href="<?= site_url('/proposicoes/liberar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja liberar esta proposição?">
                         Liberar reserva de resumo
                     </a>

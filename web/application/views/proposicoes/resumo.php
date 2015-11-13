@@ -18,7 +18,7 @@
                         Descrição
                     </label>
                     <div class="controls col-sm-8">
-                        <input id="descricao" <?= $proposicao->pode_editar_resumo($user, $errors) ? "" : "disabled" ?>  name="descricao" type="text" class="input form-control" value="<?= $proposicao->descricao ?>" maxlength="255" />
+                        <input id="descricao" <?= $proposicao->pode_editar_resumo($current_user, $errors) ? "" : "disabled" ?>  name="descricao" type="text" class="input form-control" value="<?= $proposicao->descricao ?>" maxlength="255" />
                         <div class="alert-danger">
                             <?= form_error('descricao'); ?>
                         </div>
@@ -29,7 +29,7 @@
                         Resumo
                     </label>
                     <div class="controls col-sm-8">
-                        <textarea <?= $proposicao->pode_editar_resumo($user, $errors) ? "" : "disabled" ?> rows="20" name="resumo" id="resumo" class="form-control"><?= $proposicao->resumo ?></textarea>
+                        <textarea <?= $proposicao->pode_editar_resumo($current_user, $errors) ? "" : "disabled" ?> rows="20" name="resumo" id="resumo" class="form-control"><?= $proposicao->resumo ?></textarea>
                         <div class="alert-danger">
                             <?= form_error('resumo'); ?>
                         </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <div class="controls col-sm-6 col-sm-offset-2">
-                        <?php if($proposicao->pode_editar_resumo($user, $errors)): ?>
+                        <?php if($proposicao->pode_editar_resumo($current_user, $errors)): ?>
                         <button type="submit" class="btn btn-primary">
                             Salvar resumo
                         </button>
@@ -52,12 +52,12 @@
                         <?php if($proposicao->is_reservada()): ?>
                             <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
                         <?php endif; ?>  
-                        <?php if($proposicao->pode_publicar($user, $errors)): ?>
+                        <?php if($proposicao->pode_publicar($current_user, $errors)): ?>
                         <a href="<?= site_url('/proposicoes/publicar/'.$proposicao->id) ?>" class="btn btn-success post-link" data-confirm="Confirma publicação desta proposição?">
                             Publicar proposição
                         </a>
                         <?php endif; ?>
-                        <?php if($proposicao->pode_liberar($user, $errors)): ?>
+                        <?php if($proposicao->pode_liberar($current_user, $errors)): ?>
                         <a href="<?= site_url('/proposicoes/liberar/'.$proposicao->id) ?>" class="btn btn-default post-link" data-confirm="Confirma que deseja liberar esta proposição?">
                             Liberar reserva de resumo
                         </a>

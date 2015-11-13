@@ -6,7 +6,7 @@
 
 			<div class="jumbotron">
 				<?php if (!isset($current_user)): ?>
-					<h3>Bemvindos ao espaço de moderação do Politikei</h3>
+					<h3>Bem vindos ao espaço de moderação do Politikei</h3>
 					<p>
 						Somos uma ferramenta colaborativa com dados abertos, onde qualquer pessoa pode acessar, 
 						participar e nos ajudar a construir uma nação democrática.

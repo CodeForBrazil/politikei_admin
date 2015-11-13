@@ -10,12 +10,18 @@ class Welcome extends MY_Controller
             $this->set_data('open_modal', 'login');
         }
 
-        if (!$this->check_user(null,FALSE)) {
-            $this->load->view('welcome/home', $this->get_data());
-            return;
+        if (!$this->check_user(null,FALSE)) 
+        {
+            return $this->render('welcome/home');
         }
 
-       redirect(base_url('/proposicoes'));
+        $user = $this->get_currentuser();
+        if($user->is(User_model::ROLE_DEFAULT))
+        {
+            return $this->render('welcome/aguardar');
+        }
+
+        redirect(base_url('/proposicoes'));
     }
 
     public function out()

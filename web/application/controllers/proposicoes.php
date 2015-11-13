@@ -9,31 +9,27 @@ class Proposicoes extends MY_Controller
     public function authorize()
     {
         $user = $this->get_currentuser();
-        if(!$user)
+        if(!$user || !$user->is(User_model::ROLE_ADMIN) && !$user->is(User_model::ROLE_COLABORADOR))
         {
-            redirect(base_url());
+            return redirect(base_url());
         }
 
         $called_action = $this->router->fetch_method();
-        $is_admin = $user->roles == User_model::ROLE_ADMIN;
+        $is_admin = $user->is(User_model::ROLE_ADMIN);
         if(in_array($called_action, ['pesquisar', 'adicionar', 'desativar']) && !$is_admin)
         {
-            redirect(base_url());   
+            return redirect(base_url());   
         }
 
         $this->is_admin = $is_admin;
         $this->set_data('is_admin', $is_admin);
-        $this->set_data('user', $user);
     }
 
     public function index()
     {
         $this->load->model('Proposicao_model');
-
         $proposicoes = $this->is_admin ? $this->Proposicao_model->get_all() : $this->Proposicao_model->get_ativas();
-
-        $this->set_data('proposicoes', $proposicoes);
-        $this->load->view('proposicoes/index', $this->get_data());
+        $this->render('proposicoes/index', ['proposicoes' => $proposicoes]);
     }
 
     public function pesquisar()
@@ -44,13 +40,14 @@ class Proposicoes extends MY_Controller
 
         if($sigla == null || $ano == null || $numero == null)
         {
-            $this->load->view('proposicoes/pesquisar', ['proposicoes' => [], 'sigla' => $sigla, 'numero' => $numero, 'ano' => $ano]);
+
+            $this->render('proposicoes/pesquisar', ['proposicoes' => [], 'sigla' => $sigla, 'numero' => $numero, 'ano' => $ano]);
             return;
         }
 
         $this->load->helper('camara');
         $proposicoes = pesquisar_proposicao_camara($sigla, $numero, $ano);
-        $this->load->view('proposicoes/pesquisar', ['sigla' => $sigla, 'numero' => $numero, 'ano' => $ano, 'proposicoes' => $proposicoes]);
+        $this->render('proposicoes/pesquisar', ['sigla' => $sigla, 'numero' => $numero, 'ano' => $ano, 'proposicoes' => $proposicoes]);
     }
 
     public function adicionar($idProposicao)
@@ -150,7 +147,7 @@ class Proposicoes extends MY_Controller
         if($this->is_get())
         {
             $this->set_data('proposicao', $proposicao);
-            return $this->load->view('proposicoes/resumo', $this->get_data());
+            return $this->render('proposicoes/resumo', ['proposicao' => $proposicao]);
         }
 
         $user = $this->get_currentuser();
