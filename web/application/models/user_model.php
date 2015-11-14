@@ -42,7 +42,7 @@ class User_model extends MY_Model
     public $confirmation;
     public $dateadd = 0;
     public $dateupdate = 0;
-    public $status = self::STATUS_ACTIVE;
+    public $status = self::STATUS_DISABLE;
 
 
     private $role_desc = 
@@ -390,6 +390,12 @@ class User_model extends MY_Model
 
         }
         return $alias;
+    }
+
+
+    public function is_active()
+    {
+        return $this->status == self::STATUS_ACTIVE;
     }
 
     public function pode_autorizar(&$errors)

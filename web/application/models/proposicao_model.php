@@ -141,7 +141,7 @@ class Proposicao_model extends MY_Model {
             throw new Exception(join(',', $errors));
         }
 
-        $this->colaborador_id = $user->id;
+        $this->colaborador_id = null;
         $this->situacao = self::STATUS_DISPONIVEL;
     }
 
