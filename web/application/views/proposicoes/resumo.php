@@ -2,11 +2,7 @@
 <div class="container" role="main">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 table-responsive" id="disabled_objects">
-            <h3><?php echo $proposicao->nome ."\n"; ?></h3>
-            <p>
-                <?php echo $proposicao->ementa ."\n"; ?>
-            </p>
-            
+            <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
         </div>
     </div>
     <br />
