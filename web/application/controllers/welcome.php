@@ -21,7 +21,7 @@ class Welcome extends MY_Controller
             return $this->render('welcome/aguardar');
         }
 
-        redirect(base_url('/proposicoes'));
+        redirect(base_url('/proposicoes/'));
     }
 
     public function out()

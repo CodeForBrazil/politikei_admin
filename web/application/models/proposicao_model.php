@@ -15,6 +15,17 @@ class Proposicao_model extends MY_Model {
     var $resumo;
     var $colaborador_id;
 
+    var $tipo;
+    var $tema;
+    var $autor;
+    var $data_apresentacao;
+    var $regime_tramitacao;
+    var $apreciacao;
+    var $situacao_camara;
+    var $link;
+    var $explicacao_ementa;
+    var $xml;
+
     private $colaborador = null;
 
     const STATUS_DISPONIVEL = 0;
