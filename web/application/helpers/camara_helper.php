@@ -66,7 +66,7 @@ function list_from_xml_camara($content)
         $model = new $ci->Proposicao_model;
         $model->nome = (string) $item->nomeProposicao;
         $model->ementa = (string) $item->Ementa;
-        $model->explicacao_ementa = $item->ExplicacaoEmenta;
+        $model->explicacao_ementa = $item->ExplicacaoEmenta->__toString();
         $model->camara_id = (int) $item->idProposicao;
         $model->situacao = Proposicao_model::STATUS_DISPONIVEL;
         $model->tipo = (string) $item->tipoProposicao;
