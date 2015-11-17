@@ -16,7 +16,7 @@ class Proposicoes extends MY_Controller
 
         $called_action = $this->router->fetch_method();
         $is_admin = $user->is(User_model::ROLE_ADMIN);
-        if(in_array($called_action, ['pesquisar', 'adicionar', 'desativar']) && !$is_admin)
+        if(in_array($called_action, ['pesquisar', 'adicionar', 'desativar', 'excluir']) && !$is_admin)
         {
             return redirect(base_url());   
         }
@@ -97,6 +97,24 @@ class Proposicoes extends MY_Controller
         $this->session->set_flashdata('messages', ['Proposição ativada com sucesso']);
         redirect(base_url('/proposicoes'));
     }
+
+    public function excluir($id)
+    {
+        $this->load->model('Proposicao_model');
+        $proposicao = $this->Proposicao_model->get_by_id($id);
+
+        if(!$proposicao->pode_excluir($this->errors))
+        {
+            $this->session->set_flashdata('errors', $this->errors);
+            return redirect(base_url('/proposicoes'));
+        }
+        
+        $proposicao->excluir();
+
+        $this->session->set_flashdata('messages', ['Proposição excluída com sucesso']);
+        redirect(base_url('/proposicoes/'));
+    }
+
 
     public function reservar($id)
     {

@@ -21,29 +21,24 @@
                     <?php endif; ?>
 
                     <div class="btn-group">
-                        <?php if($is_admin && $proposicao->is_ativa()): ?>
-                        <a href="<?= site_url('/proposicoes/desativar/'.$proposicao->id) ?>" class="btn btn-danger btn-sm post-link" data-confirm="Confirma que deseja desativar esta proposição?">
-                            Desativar
-                        </a>
-                        <?php elseif($is_admin): ?>
-                        <a href="<?= site_url('/proposicoes/ativar/'.$proposicao->id) ?>" class="btn btn-success btn-sm post-link" data-confirm="Confirma que deseja ativar esta proposição?">
-                            Ativar
-                        </a>
-                        <?php endif; ?>
-                        <?php if($proposicao->pode_reservar($errors)): ?>
-                        <a href="<?= site_url('/proposicoes/reservar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja reservar esta proposição?">
-                            Reservar para resumo
-                        </a>
-                        <?php endif; ?>
-                        <?php if($proposicao->is_reservada()): ?>
-                            <?php if($proposicao->pode_liberar($current_user, $errors)): ?>
-                            <a href="<?= site_url('/proposicoes/liberar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja liberar esta proposição?">
-                                Liberar reserva de resumo
+                        <?php if($is_admin): ?>
+                            <?php if($proposicao->is_ativa()): ?>
+                            <a href="<?= site_url('/proposicoes/desativar/'.$proposicao->id) ?>" class="btn btn-danger btn-sm post-link" data-confirm="Confirma que deseja desativar esta proposição?">
+                                Desativar
+                            </a>
+                            <?php else: ?>
+                            <a href="<?= site_url('/proposicoes/ativar/'.$proposicao->id) ?>" class="btn btn-success btn-sm post-link" data-confirm="Confirma que deseja ativar esta proposição?">
+                                Ativar
                             </a>
                             <?php endif; ?>
+                            <?php if($proposicao->pode_excluir($errors)): ?>
+                                <a href="<?= site_url('/proposicoes/excluir/'.$proposicao->id) ?>" class="btn btn-danger btn-sm post-link" data-confirm="Confirma que deseja excluir esta proposição?">
+                                    Excluir
+                                </a>
+                            <?php endif; ?>    
                         <?php endif; ?>
                         <a href="<?= site_url('/proposicoes/resumo/'.$proposicao->id) ?>" class="btn btn-default btn-sm">
-                            Ver resumo do app
+                            Resumo
                         </a>
                     </div>
                 </div>

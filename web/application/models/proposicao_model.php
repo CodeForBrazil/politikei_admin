@@ -106,6 +106,28 @@ class Proposicao_model extends MY_Model {
         return $this->situacao == self::STATUS_RESERVADA;
     }
 
+    public function pode_excluir(&$errors)
+    {
+        $errors = [];
+        if($this->situacao != self::STATUS_DESATIVADA)
+        {
+            $errors[] = 'Proposição em situação inválida para ser excluída';
+            return false;
+        }
+        return true;
+    }
+
+    public function excluir(&$errors)
+    {
+        $errors = [];
+        if(!$this->pode_excluir($errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->delete();
+    }
+
     public function pode_reservar(&$errors)
     {
         $errors = [];

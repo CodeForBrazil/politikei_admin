@@ -55,7 +55,6 @@
             <li>
                 <div class="bs-callout bs-callout-info">
                      <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
-
                     <div class="btn-group">
                         <a href="<?= site_url('/proposicoes/adicionar/'.$proposicao->camara_id.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-primary  post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
                         <a href="" class="btn btn-info" data-toggle="modal" data-target="#xml-modal" data-xml="<?= htmlentities($proposicao->xml) ?>">Ver XML</a>
