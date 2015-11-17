@@ -1,6 +1,6 @@
-alter table `proposicoes` ADD `descricao_tipo` varchar(255) NULL;
+alter table `proposicoes` ADD `tipo_descricao` varchar(255) NULL;
 alter table `proposicoes` ADD `numero` int NULL;
 alter table `proposicoes` ADD `ano` int NULL;
-alter table `proposicoes` ADD `uf_autor` varchar(255) NULL;
-alter table `proposicoes` ADD `partido_autor` varchar(255) NULL;
+alter table `proposicoes` ADD `autor_uf` varchar(255) NULL;
+alter table `proposicoes` ADD `autor_partido` varchar(255) NULL;
 alter table `proposicoes` ADD `autor_camara_id` int NULL;
