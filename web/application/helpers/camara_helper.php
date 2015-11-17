@@ -66,17 +66,26 @@ function list_from_xml_camara($content)
         $model = new $ci->Proposicao_model;
         $model->nome = (string) $item->nomeProposicao;
         $model->ementa = (string) $item->Ementa;
-        $model->explicacao_ementa = $item->ExplicacaoEmenta->__toString();
+        $model->explicacao_ementa = (string) $item->ExplicacaoEmenta;
         $model->camara_id = (int) $item->idProposicao;
         $model->situacao = Proposicao_model::STATUS_DISPONIVEL;
-        $model->tipo = (string) $item->tipoProposicao;
+        $model->tipo_descricao = (string) $item->tipoProposicao;
         $model->tema = (string) $item->tema;
-        $model->autor = (string) $item->Autor;
+        
         $model->data_apresentacao = date(DateTime::createFromFormat('d/m/Y', $item->DataApresentacao)->format('Y-m-d'));
         $model->regime_tramitacao = (string) $item->RegimeTramitacao;
         $model->apreciacao = (string) $item->Apreciacao;
         $model->situacao_camara = (string) $item->Situacao;
         $model->link = (string) $item->LinkInteiroTeor;
+
+        $model->tipo = (string)$item->attributes()['tipo'];
+        $model->numero = (string) $item->attributes()['numero'];
+        $model->ano = (string) $item->attributes()['ano'];
+        
+        $model->autor = (string) $item->Autor;
+        $model->autor_uf = (string) $item->ufAutor;
+        $model->autor_partido = trim((string) $item->partidoAutor);
+        $model->autor_camara_id =  empty($item->ideCadastro) ? null : (int) $item->ideCadastro;
         
         $model->xml = $content;
 
