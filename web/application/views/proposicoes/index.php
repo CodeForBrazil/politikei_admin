@@ -20,7 +20,7 @@
                     <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
                     <?php endif; ?>
 
-                    <div class="btn-group">
+                    <div class="btn-group pull-left">
                         <?php if($is_admin): ?>
                             <?php if($proposicao->is_ativa()): ?>
                             <a href="<?= site_url('/proposicoes/desativar/'.$proposicao->id) ?>" class="btn btn-danger btn-sm post-link" data-confirm="Confirma que deseja desativar esta proposição?">
@@ -41,6 +41,12 @@
                             Resumo
                         </a>
                     </div>
+                    <div class="btn-group pull-right">
+                        <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default btn-sm" data-toggle="tooltip" title="Acessar Inteiro Teor">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Acessar Inteiro Teor
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </li>
             <?php endforeach; ?>

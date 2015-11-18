@@ -55,10 +55,17 @@
             <li>
                 <div class="bs-callout bs-callout-info">
                      <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
-                    <div class="btn-group">
+                    <div class="btn-group pull-left">
                         <a href="<?= site_url('/proposicoes/adicionar/'.$proposicao->camara_id.'?sigla='.$sigla.'&ano='.$ano.'&numero='.$numero) ?>" class="btn btn-primary  post-link" data-confirm="Confirma a inclusão desta proposição">Adicionar</a>
                         <a href="" class="btn btn-info" data-toggle="modal" data-target="#xml-modal" data-xml="<?= htmlentities($proposicao->xml) ?>">Ver XML</a>
+                        
                     </div>
+                    <div class="btn-group pull-right">
+                        <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default" data-toggle="tooltip" title="Acessar Inteiro Teor">
+                            Inteiro Teor <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </li>
             <?php endforeach; ?>

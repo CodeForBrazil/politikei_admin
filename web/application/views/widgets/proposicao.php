@@ -1,7 +1,4 @@
 <h3>
-<a href="<?= $proposicao->link ?>" target="_blank" data-toggle="tooltip" title="Inteiro Teor">
-    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-</a>
 <?= $proposicao->tipo_descricao.' '.$proposicao->numero.'/'.$proposicao->ano ?>
 </h3>
 
@@ -10,12 +7,12 @@
 </p>
 <p>
     <?php if(!empty($proposicao->explicacao_ementa)): ?>
-        Explicação: <?= $proposicao->explicacao_ementa ?>
+        Explicação: <?= '-'.$proposicao->explicacao_ementa.'-' ?>
     <?php endif; ?>
 </p>
 <p><strong>Tema:</strong> <?= $proposicao->tema ?></p>
 <p>Apresentada em <strong><?= date('d/m/Y', strtotime($proposicao->data_apresentacao)) ?></strong></p>
-<p>Autor: <strong><?= $proposicao->autor.' '.$proposicao->autor_uf.'/'.$proposicao->autor_partido ?></strong></p>
+<p>Autor: <strong><?php echo $proposicao->autor; echo empty($proposicao->autor_uf) ? '' :  ' '.$proposicao->autor_uf.'/'.$proposicao->autor_partido ?></strong></p>
 
 
 <p>Regime de tramitação <strong><?= $proposicao->regime_tramitacao ?></strong></p>

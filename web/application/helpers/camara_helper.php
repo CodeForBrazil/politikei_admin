@@ -64,27 +64,27 @@ function list_from_xml_camara($content)
     $xml = new SimpleXMLElement($content);
     foreach ($xml->xpath('//proposicao') as $item) {
         $model = new $ci->Proposicao_model;
-        $model->nome = (string) $item->nomeProposicao;
-        $model->ementa = (string) $item->Ementa;
-        $model->explicacao_ementa = (string) $item->ExplicacaoEmenta;
+        $model->nome = get_value($item->nomeProposicao);
+        $model->ementa = get_value($item->Ementa);
+        $model->explicacao_ementa = get_value($item->ExplicacaoEmenta);
         $model->camara_id = (int) $item->idProposicao;
         $model->situacao = Proposicao_model::STATUS_DISPONIVEL;
-        $model->tipo_descricao = (string) $item->tipoProposicao;
-        $model->tema = (string) $item->tema;
+        $model->tipo_descricao = get_value($item->tipoProposicao);
+        $model->tema = get_value($item->tema);
         
         $model->data_apresentacao = date(DateTime::createFromFormat('d/m/Y', $item->DataApresentacao)->format('Y-m-d'));
-        $model->regime_tramitacao = (string) $item->RegimeTramitacao;
-        $model->apreciacao = (string) $item->Apreciacao;
-        $model->situacao_camara = (string) $item->Situacao;
-        $model->link = (string) $item->LinkInteiroTeor;
+        $model->regime_tramitacao = get_value($item->RegimeTramitacao);
+        $model->apreciacao = get_value($item->Apreciacao);
+        $model->situacao_camara = get_value($item->Situacao);
+        $model->link = get_value($item->LinkInteiroTeor);
 
-        $model->tipo = (string)$item->attributes()['tipo'];
-        $model->numero = (string) $item->attributes()['numero'];
-        $model->ano = (string) $item->attributes()['ano'];
+        $model->tipo = get_value($item->attributes()['tipo']);
+        $model->numero = (int) $item->attributes()['numero'];
+        $model->ano = (int) $item->attributes()['ano'];
         
-        $model->autor = (string) $item->Autor;
-        $model->autor_uf = (string) $item->ufAutor;
-        $model->autor_partido = trim((string) $item->partidoAutor);
+        $model->autor = get_value($item->Autor);
+        $model->autor_uf = get_value($item->ufAutor);
+        $model->autor_partido = get_value($item->partidoAutor);
         $model->autor_camara_id =  empty($item->ideCadastro) ? null : (int) $item->ideCadastro;
         
         $model->xml = $content;
@@ -93,6 +93,12 @@ function list_from_xml_camara($content)
     }
     
     return $models;
+}
+
+function get_value($value){
+    $value = (string) $value;
+    $trimmed = trim($value);
+    return empty($trimmed) ? null : $trimmed;
 }
 
 function get_from_xml_camara($content)

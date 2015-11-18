@@ -11,6 +11,10 @@
                          <a href="<?= site_url('/proposicoes') ?>" class="btn btn-default">
                             Voltar
                         </a>
+
+                        <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default btn-sm" data-toggle="tooltip" title="Acessar Inteiro Teor">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Acessar Inteiro Teor
+                        </a>
                     </div>
                 </div>
             </div>
