@@ -62,7 +62,8 @@ function list_from_xml_camara($content)
     $ci = get_instance();   
     $ci->load->model('Proposicao_model');
     $xml = new SimpleXMLElement($content);
-    foreach ($xml->xpath('//proposicao') as $item) {
+
+    foreach ($xml->xpath('/proposicao') as $item) {
         $model = new $ci->Proposicao_model;
         $model->nome = get_value($item->nomeProposicao);
         $model->ementa = get_value($item->Ementa);
@@ -72,7 +73,10 @@ function list_from_xml_camara($content)
         $model->tipo_descricao = get_value($item->tipoProposicao);
         $model->tema = get_value($item->tema);
         
-        $model->data_apresentacao = date(DateTime::createFromFormat('d/m/Y', $item->DataApresentacao)->format('Y-m-d'));
+        if(!empty($item->DataApresentacao)){
+            $model->data_apresentacao = date(DateTime::createFromFormat('d/m/Y', $item->DataApresentacao)->format('Y-m-d'));
+        }
+
         $model->regime_tramitacao = get_value($item->RegimeTramitacao);
         $model->apreciacao = get_value($item->Apreciacao);
         $model->situacao_camara = get_value($item->Situacao);
