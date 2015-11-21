@@ -7,13 +7,16 @@
                         <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
                 </div>
                 <div class="form-group">
-                    <div class="controls">
+                    <div class="btn-group">
                          <a href="<?= site_url('/proposicoes') ?>" class="btn btn-default">
                             Voltar
                         </a>
-
-                        <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default btn-sm" data-toggle="tooltip" title="Acessar Inteiro Teor">
+                        <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default" data-toggle="tooltip" title="Acessar Inteiro Teor">
                             <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Acessar Inteiro Teor
+                        </a>
+
+                        <a href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao=<?= $proposicao->camara_id ?>" target="_blank" class="btn btn-default">
+                            Ver tramitação na câmara
                         </a>
                     </div>
                 </div>
