@@ -1,14 +1,34 @@
 <?php $this->load->view('header'); ?>
 <div class="container" role="main">
-    <h2>Proposições disponíveis</h2>
-    <?php if($is_admin): ?>
-    <a href="<?= site_url('/users') ?>" class="btn btn-default">
-        Usuários
-    </a>
-    <a href="<?= site_url('/proposicoes/pesquisar') ?>" class="btn btn-default">
-        Adicionar nova
-    </a>
+    <?php if($filtro == "todas"): ?>
+        <h2>Todas as proposições</h2>
+    <?php else: ?>
+        <h2>Proposições disponíveis</h2>
     <?php endif; ?>
+
+    <div class="btn-group">
+        <?php if($filtro == "todas"): ?>
+        <a href="<?= site_url('/proposicoes/') ?>" class="btn btn-default">
+            Ver disponíveis
+        </a>
+        <?php else: ?>
+        <a href="<?= site_url('/proposicoes?filtro=todas') ?>" class="btn btn-default">
+            Ver todas
+        </a>
+        <?php endif; ?>
+    </div>
+
+    <div class="btn-group">
+
+        <?php if($is_admin): ?>
+        <a href="<?= site_url('/users') ?>" class="btn btn-default">
+            Usuários
+        </a>
+        <a href="<?= site_url('/proposicoes/pesquisar') ?>" class="btn btn-default">
+            Adicionar nova
+        </a>
+        <?php endif; ?>
+    </div>
 
     <ul>
         <?php foreach ($proposicoes as $proposicao) : ?>

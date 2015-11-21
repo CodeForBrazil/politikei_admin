@@ -69,6 +69,12 @@ class Proposicao_model extends MY_Model {
         return $this->get_self_results($query);
     }
 
+    public function get_disponiveis()
+    {
+        $query = $this->db->get_where(self::TABLE_NAME, array('situacao =' => self::STATUS_DISPONIVEL));
+        return $this->get_self_results($query);
+    }
+
     public function get_by_camara_id($idProposicao)
     {
         $query = $this->db->get_where(self::TABLE_NAME, array('camara_id' => $idProposicao));

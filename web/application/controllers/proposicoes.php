@@ -28,8 +28,19 @@ class Proposicoes extends MY_Controller
     public function index()
     {
         $this->load->model('Proposicao_model');
-        $proposicoes = $this->is_admin ? $this->Proposicao_model->get_all() : $this->Proposicao_model->get_ativas();
-        $this->render('proposicoes/index', ['proposicoes' => $proposicoes]);
+        $filtro = isset($_GET['filtro']) ? trim($_GET['filtro']) : null;
+
+
+        if($filtro == 'todas') 
+        {
+            $proposicoes = $this->is_admin ? $this->Proposicao_model->get_all() : $this->Proposicao_model->get_ativas();
+        }
+        else
+        {
+            $proposicoes = $this->Proposicao_model->get_disponiveis();
+        }
+
+        $this->render('proposicoes/index', ['proposicoes' => $proposicoes, 'filtro' => $filtro]);
     }
 
     public function pesquisar()
