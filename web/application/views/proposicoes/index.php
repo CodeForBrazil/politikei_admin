@@ -17,7 +17,7 @@
                     <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
 
                     <?php if($proposicao->is_reservada()): ?>
-                    <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
+                    <p><strong>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></strong></p>
                     <?php endif; ?>
 
                     <div class="btn-group pull-left">
@@ -36,9 +36,14 @@
                                     Excluir
                                 </a>
                             <?php endif; ?>    
+                            <?php if($proposicao->pode_reservar($errors)): ?>
+                                <a href="<?= site_url('/proposicoes/reservar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja reservar esta proposição?">
+                                    Reservar para resumo
+                                </a>
+                            <?php endif; ?> 
                         <?php endif; ?>
                         <a href="<?= site_url('/proposicoes/resumo/'.$proposicao->id) ?>" class="btn btn-default btn-sm">
-                            Resumo
+                            Ver resumo
                         </a>
                     </div>
                     <div class="btn-group pull-right">
