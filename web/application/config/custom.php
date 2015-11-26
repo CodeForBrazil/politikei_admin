@@ -2,6 +2,9 @@
 
 define('UPLOAD_PATH', 'upload/');
 
+$ci=& get_instance();
+$ci->load->helper('url');
+
 $config['sender_email'] = 'politikei@politikei.org';
 $config['contact_email'] = 'guga.guerchon@gmail.com';
 $config['admin_email'] = 'guga.guerchon@gmail.com';

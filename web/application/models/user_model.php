@@ -12,12 +12,13 @@ class User_model extends MY_Model
     /**
      * Table name.
      */
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = 'users';
     const ACTIVITY_TABLE_NAME = 'activity';
 
     // Roles
     const ROLE_DEFAULT = 0;
     const ROLE_ADMIN = 1;
+    const ROLE_COLABORADOR = 2;
 
     // Status
     const STATUS_DISABLE = 0;
@@ -41,7 +42,15 @@ class User_model extends MY_Model
     public $confirmation;
     public $dateadd = 0;
     public $dateupdate = 0;
-    public $status = self::STATUS_ACTIVE;
+    public $status = self::STATUS_DISABLE;
+
+
+    private $role_desc = 
+    [
+        0 => "Usuário",
+        1 => "Admin",
+        2 => "Colaborador",
+    ];
 
     public function __construct($data = array())
     {
@@ -59,6 +68,12 @@ class User_model extends MY_Model
         empty($name) and $name = $this->alias;
         empty($name) and $name = self::NO_NAME;
         return $name;
+    }
+
+    public function get_name_or_email()
+    {
+        $name = $this->get_name();
+        return $name == self::NO_NAME ? $this->email : $this->name;
     }
 
     /**
@@ -107,7 +122,7 @@ class User_model extends MY_Model
      */
     public function is($role)
     {
-        return $role & $this->roles;
+        return $role == $this->roles;
     }
 
     /**
@@ -375,6 +390,63 @@ class User_model extends MY_Model
 
         }
         return $alias;
+    }
+
+
+    public function is_active()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function pode_autorizar(&$errors)
+    {
+        $errors = [];
+        if(!$this->is(self::ROLE_DEFAULT))
+        {
+            $errors[] = 'Usuário com permissão inválida';
+        }
+
+
+        return empty($errors);
+    }
+
+    public function autorizar()
+    {
+        $errors = [];
+        if(!$this->pode_autorizar($user, $errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->roles = self::ROLE_COLABORADOR;
+    }
+
+    public function pode_desautorizar(&$errors)
+    {
+        $errors = [];
+        if(!$this->is(self::ROLE_COLABORADOR))
+        {
+            $errors[] = 'Usuário com permissão inválida';
+        }
+
+
+        return empty($errors);
+    }
+
+    public function desautorizar()
+    {
+        $errors = [];
+        if(!$this->pode_desautorizar($user, $errors))
+        {
+            throw new Exception(join(',', $errors));
+        }
+
+        $this->roles = self::ROLE_DEFAULT;
+    }
+
+    public function get_role_desc()
+    {
+        return $this->role_desc[$this->roles];
     }
 
 }

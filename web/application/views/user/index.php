@@ -29,24 +29,6 @@
 				<?php endif; ?>
 			</div>
 		</div>
-		
-		<div class="row">
-			<?php 
-				$i = 0; $arr = array(array(),array(),array());
-				foreach ($user->get_activities() as $activity) {
-					$arr[$i++][] = $activity;
-					if ($i == 3) $i = 0;
-				}
-			?>
-			<?php for ($i=0; $i < 3; $i++) : ?>
-				<div class="col-sm-4">
-				<?php 
-					foreach ($arr[$i] as $activity) $this->load->view("widgets/activity",array('activity' => $activity)); 
-				?>
-				</div>
-			<?php endfor; ?>
-		</div>
-
 	</div>
     
 <?php $this->load->view('footer.php');

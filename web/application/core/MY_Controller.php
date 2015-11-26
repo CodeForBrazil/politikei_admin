@@ -201,22 +201,29 @@ class MY_Controller extends CI_Controller
                     $this->form_validation->set_rules('login_password', lang('app_password'), 'required');
 
                     $current_user = false;
-                    if ($this->form_validation->run() !== false) {
-                        $email = $this->input->post('login_email');
-                        $password = $this->input->post('login_password');
-
-                        if ($current_user = $this->login($email, $password)) {
-                            if (isset($_GET['from']) && ($redirect = $_GET['from'])) {
-                                redirect($redirect);
-                            }
-
-                        }
+                    if ($this->form_validation->run() == false) {
+                        return $this->set_data('open_modal', 'login');
                     }
-                    if (!$current_user) {
-                        $this->set_data('open_modal', 'login');
+                    
+                    $email = $this->input->post('login_email');
+                    $password = $this->input->post('login_password');
+                    if (!$current_user = $this->get_user($email, $password)) 
+                    {
+                        return $this->set_data('open_modal', 'login');
                     }
+
+                    if(!$current_user->is_active())
+                    {
+                        $this->errors[] = 'Seu usuário ainda não foi confirmado. Por favor acesse o link enviado ao seu e-mail para continuar o cadastro.';
+                        return;
+                    }
+
+                    $this->set_currentuser($current_user); //user ok
+                    if (isset($_GET['from']) && ($redirect = $_GET['from'])) {
+                        return redirect($redirect);
+                    }
+                    
                     break;
-
                 case 'register':
                     $this->form_validation->set_rules('register_email', lang('app_email'), 'required|valid_email');
                     $this->form_validation->set_rules('register_password', lang('app_password'), 'required|min_length[5]|max_length[15]');
@@ -238,7 +245,8 @@ class MY_Controller extends CI_Controller
                                 $this->load->helper('email');
                                 email_user_confirmation($current_user);
                                 admin_report("New user: $email", "Check his profil: " . $current_user->get_url());
-                                redirect(site_url('user/settings'));
+                                $this->session->set_flashdata('messages', ['Favor verifique seu e-mail para continuar o cadastro']);
+                                redirect(site_url('/'));
                             } else {
                                 $this->errors[] = sprintf(lang('app_register_error'), $email);
                                 $this->set_data('open_modal', 'register');
@@ -308,20 +316,19 @@ class MY_Controller extends CI_Controller
         return $this->validation->check_user($current_user, $type, $redirect);
     }
 
-    /**
-     * Log a user in.
+     /**
+     * Get a user by email and password.
      *
      * @param string $email
      * @param string $password
      * @return boolean
      */
-    protected function login($email, $password)
+    protected function get_user($email, $password)
     {
         $this->load->model('User_model');
         $user = $this->User_model->get_by_email($email);
         $password = $this->User_model->encrypt_password($password);
         if (!is_null($user) && ($password === $user->password)) {
-            $this->set_currentuser($user);
             return $user;
         }
         return false;
@@ -344,12 +351,10 @@ class MY_Controller extends CI_Controller
         $user->set_confirmation();
 
         if ($user->insert()) {
-            $this->set_currentuser($user);
             return $user;
         } else {
             return false;
         }
-
     }
 
     /**
@@ -554,6 +559,17 @@ class MY_Controller extends CI_Controller
     {
         $this->load->library('user_agent');
         redirect(($this->agent->is_referral()) ? $this->agent->referrer() : $url);
+    }
+
+
+    protected function render($view, $data = null)
+    {
+        $view_data = $this->get_data();
+        if(is_array($data))
+        {
+            $view_data = array_merge($view_data, $data);
+        }
+        $this->load->view($view, $view_data);
     }
 }
 

@@ -68,4 +68,11 @@ $(document).ready( function() {
 
     $('body').on('click', '.post-link', postHandler);
     confirmModal.on('click', '.post-link', postHandler);
+
+    $('#xml-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('xml');
+        var modal = $(this)
+        modal.find('#content').text(recipient);
+    })
 });

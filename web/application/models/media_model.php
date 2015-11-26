@@ -11,7 +11,7 @@ class Media_model extends MY_Model
   /**
    * Table name.
    */
-  const TABLE_NAME = 'media';
+  const TABLE_NAME = 'medias';
   
   const STYLE_ORIGINAL = NULL;
 //  const STYLE_ROOT = 'root';

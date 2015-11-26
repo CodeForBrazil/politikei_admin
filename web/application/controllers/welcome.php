@@ -4,51 +4,29 @@
 
 class Welcome extends MY_Controller
 {
-    /**
-     * Index Page for this controller.
-     */
     public function index()
     {
         if (isset($_GET['from'])) {
             $this->set_data('open_modal', 'login');
         }
 
-        if (!$this->check_user(null,FALSE)) {
-            $this->load->view('welcome/home', $this->get_data());
-            return;
+        if (!$this->check_user(null,FALSE)) 
+        {
+            return $this->render('welcome/home');
         }
 
-       redirect(base_url('/proposicoes'));
+        $user = $this->get_currentuser();
+        if($user->is(User_model::ROLE_DEFAULT))
+        {
+            return $this->render('welcome/aguardar');
+        }
+
+        redirect(base_url('/proposicoes/'));
     }
 
-    /**
-     * Page displaying the current theme.
-     */
-    public function theme()
-    {
-        $this->load->view('welcome/theme');
-    }
-
-    /**
-     * Page with todo list.
-     */
-    public function todo()
-    {
-        $this->load->view('welcome/todo');
-    }
-
-    /**
-     * Sign out action.
-     *
-     * @return void
-     */
     public function out()
     {
         $this->session->sess_destroy();
         redirect('/');
     }
-
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

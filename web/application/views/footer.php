@@ -2,8 +2,7 @@
 <?php if (isset($current_user) && $current_user->is(User_model::ROLE_ADMIN)) : ?>
 	<div class="container">
 		<ul id="footer_menu">
-			<li><a href="<?php echo site_url('welcome/todo'); ?>">To do</a></li>
-			<li><a href="<?php echo site_url('welcome/theme'); ?>">Theme</a></li>
+			
 		</ul>
 	</div>
 <?php endif; ?>
@@ -20,6 +19,8 @@
 <?php $this->load->view('modals/confirm'); ?>
 
 <?php $this->load->view('modals/apply'); ?>
+
+<?php $this->load->view('modals/xml'); ?>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<?php echo base_url('/assets/js/bootstrap.min.js'); ?>"></script>

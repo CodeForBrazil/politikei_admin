@@ -105,7 +105,8 @@ class MY_Model extends CI_Model
     protected function get_first_self_result($query)
     {
         $class = get_class($this);
-        return $query->num_rows() > 0 ? new $class(array_shift($query->result())) : null;
+        $rows = $query->num_rows();
+        return $rows > 0 ? new $class(array_shift($query->result())) : null;
     }
 
     /**
