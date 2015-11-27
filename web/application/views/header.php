@@ -33,9 +33,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="<?= base_url() ?>" id="logo">
-          	<h1><?php echo lang('app_site_name'); ?></h1>
-          	<h2 class="tsN fwR fsI show"><?php echo lang('app_site_slogan'); ?></h2>
+          <a href="<?= base_url() ?>" id="logo" class="navbar-brand">
+            <img class="hidden-xs" style="max-width:50px;; max-heigth:50px;  " src="<?= base_url('/assets/img/logo.png'); ?>" />
+            <img class="visible-xs" style="max-width:40px;; max-heigth:50px;  " src="<?= base_url('/assets/img/logo.png'); ?>" />
           </a>
         </div>
         <div class="navbar-collapse collapse">
