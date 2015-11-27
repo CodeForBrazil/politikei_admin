@@ -11,3 +11,4 @@ Portal web direcionado aos colaboradores do politikei onde poderão:
 Codeigniter webapp sandbox for heroku cloud hosting with Sendgrid / Cloudinary / ClearDB / PHPUnit / Less / Bootstrap / Font Awesome
 
 For more info about how to install read: INSTALL.md
+Atualizado  em 31/10
