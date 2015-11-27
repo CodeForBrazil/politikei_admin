@@ -30,7 +30,7 @@
                     </a>
                 <?php endif; ?> 
                 <?php if($proposicao->is_reservada()): ?>
-                    <p style="color: #F6D101;">Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
+                    <p>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></p>
                     <?php if($proposicao->pode_liberar($current_user, $errors)): ?>
                     <a href="<?= site_url('/proposicoes/liberar/'.$proposicao->id) ?>" class="btn btn-default btn-sm post-link" data-confirm="Confirma que deseja liberar esta proposição?">
                         Liberar reserva de resumo
