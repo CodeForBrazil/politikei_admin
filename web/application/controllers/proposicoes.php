@@ -37,7 +37,7 @@ class Proposicoes extends MY_Controller
         }
         else
         {
-            $proposicoes = $this->Proposicao_model->get_disponiveis();
+            $proposicoes = $this->Proposicao_model->get_em_edicao();
         }
 
         $this->render('proposicoes/index', ['proposicoes' => $proposicoes, 'filtro' => $filtro]);

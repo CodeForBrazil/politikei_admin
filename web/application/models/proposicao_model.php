@@ -69,9 +69,11 @@ class Proposicao_model extends MY_Model {
         return $this->get_self_results($query);
     }
 
-    public function get_disponiveis()
+    public function get_em_edicao()
     {
-        $query = $this->db->get_where(self::TABLE_NAME, array('situacao =' => self::STATUS_DISPONIVEL));
+        $this->db->dbprefix($this->TABLE_NAME);
+        $this->db->where_in('situacao', [self::STATUS_DISPONIVEL, self::STATUS_RESERVADA]);
+        $query = $this->db->get(self::TABLE_NAME);
         return $this->get_self_results($query);
     }
 
