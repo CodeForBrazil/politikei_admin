@@ -38,7 +38,7 @@ class User_model extends MY_Model
     public $alias;
     public $bio;
     public $city;
-    public $roles = self::ROLE_DEFAULT;
+    public $roles = self::ROLE_COLABORADOR;
     public $confirmation;
     public $dateadd = 0;
     public $dateupdate = 0;
