@@ -1,4 +1,11 @@
 <h3>
+
+<?php if($proposicao->is_reservada()): ?>
+	<span class="glyphicon glyphicon-record prop-reservada" aria-hidden="true"></span>
+<?php elseif($proposicao->pode_reservar($errors)) : ?>
+	<span class="glyphicon glyphicon-record prop-liberada" aria-hidden="true"></span>
+<?php endif; ?>
+
 <?= $proposicao->tipo_descricao.' '.$proposicao->numero.'/'.$proposicao->ano ?>
 </h3>
 
