@@ -6,9 +6,18 @@
 	<span class="glyphicon glyphicon-record prop-liberada" aria-hidden="true"></span>
 <?php endif; ?>
 
+
 <?= $proposicao->tipo_descricao.' '.$proposicao->numero.'/'.$proposicao->ano ?>
+
 </h3>
 
+<?php if($proposicao->is_reservada()): ?>
+	<p>
+        <strong>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></strong>
+    </p>
+<?php endif; ?>
+
+<div class="clearfix"></div>
 <p>
     Ementa: <?= $proposicao->ementa ?>
 </p>

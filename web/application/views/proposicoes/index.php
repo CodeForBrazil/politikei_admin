@@ -36,10 +36,7 @@
                 <div class="bs-callout bs-callout-info">
                     <?= $this->load->view('widgets/proposicao', ['proposicao' => $proposicao], true); ?>
 
-                    <?php if($proposicao->is_reservada()): ?>
-                    <p><strong>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></strong></p>
-                    <?php endif; ?>
-
+                    
                     <div class="btn-group pull-left">
                         <?php if($is_admin): ?>
                             <?php if($proposicao->is_ativa()): ?>
