@@ -12,8 +12,12 @@
 </h3>
 
 <?php if($proposicao->is_reservada()): ?>
-	<p>
+	<p class="prop-reservada">
         <strong>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></strong>
+    </p>
+<?php elseif($proposicao->pode_reservar($errors)) : ?>
+	<p class="prop-liberada">
+        <strong>Disponível para reserva</strong>
     </p>
 <?php endif; ?>
 
