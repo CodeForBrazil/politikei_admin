@@ -23,11 +23,11 @@
 
 <div class="clearfix"></div>
 <p>
-    Ementa: <?= $proposicao->ementa ?>
+    <strong>Ementa:</strong> <?= $proposicao->ementa ?>
 </p>
 <p>
     <?php if(!empty($proposicao->explicacao_ementa)): ?>
-        Explicação: <?= '-'.$proposicao->explicacao_ementa.'-' ?>
+        <strong>Explicação:</strong> <?= '-'.$proposicao->explicacao_ementa.'-' ?>
     <?php endif; ?>
 </p>
 <p><strong>Tema:</strong> <?= $proposicao->tema ?></p>
