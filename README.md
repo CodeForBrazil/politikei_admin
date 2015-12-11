@@ -1,14 +1,9 @@
-# PhpSandbox
+# Portal de colaboração do Politikei
 
-Portal web direcionado aos colaboradores do politikei onde poderão:
-- Verificar quais proposições estão necessitando produção de resumo
-- selecionar uma proposição para produzir o resumo
-- acessar link para download do pdf de teor completo da proposição
-- campo para inserir título produzido da proposição
-- campo para inserir o resumo da proposição
+## Portal web para gerenciar de forma colaborativa e participativa o conteúdo utilizado nos mais diversos produtos do Politikei. Para o gerenciamento do conteúdo, o portal contará com as seguintes funcionalidades:
 
+* Importação de proposições diretamente da base de dados oficial da câmara (posteriormente do senado também).
+* Produção de conteúdo acessível para cada proposição, que serão disponibilizados nos produtos.
 
-Codeigniter webapp sandbox for heroku cloud hosting with Sendgrid / Cloudinary / ClearDB / PHPUnit / Less / Bootstrap / Font Awesome
-
-For more info about how to install read: INSTALL.md
-Atualizado  em 31/10
+O portal já está no ar: http://politikei-admin.herokuapp.com/. 
+Para ajudar no desenvolvimento do app nos encotramos aqui mesmo no github https://github.com/CodeForBrazil/politikei_android
