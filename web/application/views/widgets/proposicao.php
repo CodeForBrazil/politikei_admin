@@ -12,18 +12,22 @@
 </h3>
 
 <?php if($proposicao->is_reservada()): ?>
-	<p>
+	<p class="prop-reservada">
         <strong>Proposição reservada por: <?= $proposicao->get_colaborador()->get_name_or_email() ?></strong>
+    </p>
+<?php elseif($proposicao->pode_reservar($errors)) : ?>
+	<p class="prop-liberada">
+        <strong>Disponível para reserva</strong>
     </p>
 <?php endif; ?>
 
 <div class="clearfix"></div>
 <p>
-    Ementa: <?= $proposicao->ementa ?>
+    <strong>Ementa:</strong> <?= $proposicao->ementa ?>
 </p>
 <p>
     <?php if(!empty($proposicao->explicacao_ementa)): ?>
-        Explicação: <?= '-'.$proposicao->explicacao_ementa.'-' ?>
+        <strong>Explicação:</strong> <?= '-'.$proposicao->explicacao_ementa.'-' ?>
     <?php endif; ?>
 </p>
 <p><strong>Tema:</strong> <?= $proposicao->tema ?></p>
