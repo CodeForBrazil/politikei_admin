@@ -106,7 +106,11 @@ class MY_Model extends CI_Model
     {
         $class = get_class($this);
         $rows = $query->num_rows();
-        return $rows > 0 ? new $class(array_shift($query->result())) : null;
+        if($rows <= 0) {
+            return null;
+        }
+        $result = $query->result();
+        return new $class(array_shift($result));
     }
 
     /**

@@ -71,7 +71,7 @@ class Proposicao_model extends MY_Model {
 
     public function get_em_edicao()
     {
-        $this->db->dbprefix($this->TABLE_NAME);
+        $this->db->dbprefix(self::TABLE_NAME);
         $this->db->where_in('situacao', [self::STATUS_DISPONIVEL, self::STATUS_RESERVADA]);
         $query = $this->db->get(self::TABLE_NAME);
         return $this->get_self_results($query);
