@@ -54,12 +54,6 @@ class User extends MY_Controller {
 			    $this->form_validation->set_rules('email', lang('app_email'), 'required|valid_email');
 			}
 			
-			$password = $this->input->post('password');
-			if (!empty($password)) {
-			    $this->form_validation->set_rules('password', lang('app_password'), 'min_length[5]|max_length[15]');
-			    $this->form_validation->set_rules('password_confirm', lang('app_confirm_password'), 'required|matches[password]');
-			}
-	
 			if ($this->form_validation->run()) {
 				$user->name = $this->input->post('name');
 				$user->email = $this->input->post('email');
@@ -67,8 +61,6 @@ class User extends MY_Controller {
 				$user->city = $this->input->post('city');
 				$user->alias = $this->input->post('alias');
 				
-				if (!empty($password)) $user->password = $user->encrypt_password($password);
-	
 		        if ($user->update()) {
 
 					$this->load->library('upload');
@@ -95,6 +87,38 @@ class User extends MY_Controller {
 		
 		$this->set_data('user',$user);
 		$this->load->view('user/settings',$this->get_data());
+	}
+
+	public function senha($id=NULL) {
+	    $this->load->helper('form');
+	    $this->load->library('form_validation');
+		$this->load->model('User_model');
+		
+		$user = $this->getUser($id, User_model::ROLE_ADMIN);
+		
+		if ($this->is_post()) {
+			$this->form_validation->set_rules('password', lang('app_password'), 'required');
+			$this->form_validation->set_rules('password_confirm', lang('app_password'), 'required');
+		    $this->form_validation->set_rules('password', lang('app_password'), 'min_length[5]|max_length[15]');
+		    $this->form_validation->set_rules('password_confirm', lang('app_confirm_password'), 'required|matches[password]');
+
+	
+			if ($this->form_validation->run()) {
+				$password = $this->input->post('password');
+				if (!empty($password)) $user->password = $user->encrypt_password($password);
+	
+		        if ($user->update()) {
+					$this->session->set_flashdata('messages', ['Senha alterada com sucesso']);
+	        		return redirect('proposicoes');
+
+		        } else {
+		        	$this->errors[] = sprintf(lang('app_user_save_error'), $this->config->item('contact_email'));
+				}
+			}
+		}
+		
+		$this->set_data('user', $user);
+		$this->load->view('user/senha', $this->get_data());
 	}
 	 	
 	/**

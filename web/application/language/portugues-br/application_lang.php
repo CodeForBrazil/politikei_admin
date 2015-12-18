@@ -22,6 +22,7 @@ $lang['app_remove'] = "Retirar";
 $lang['app_delete'] = "Deletar";
 $lang['app_browse'] = "Escolher uma imagem";
 $lang['app_parameters'] = "Informações do perfil";
+$lang['app_my_password'] = "Senha";
 $lang['app_yes'] = "Sim";
 $lang['app_no'] = "Não";
 $lang['app_back_to_profile'] = "Voltar ao perfil";

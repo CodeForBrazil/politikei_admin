@@ -44,8 +44,8 @@
 	          	<li class="dropdown hidden-xs">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $current_user->get_name(); ?><span class="caret"></span></a>
 	              <ul class="dropdown-menu dropdown-menu-right" role="menu">
-	                <li><a href="<?php echo site_url('user'); ?>"><?php echo lang('app_my_account'); ?></a></li>
 	                <li><a href="<?php echo site_url('user/settings'); ?>"><?php echo lang('app_parameters'); ?></a></li>
+                  <li><a href="<?php echo site_url('user/senha'); ?>"><?php echo lang('app_my_password'); ?></a></li>
 	                <li><a href="<?php echo site_url('welcome/out'); ?>"><?php echo lang('app_disconnect'); ?></a></li>
 	              </ul>
 	          	</li>
