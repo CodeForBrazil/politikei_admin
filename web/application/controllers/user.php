@@ -83,6 +83,10 @@ class User extends MY_Controller {
 						$this->set_data('current_user',$current_user);
 					}
 		        	$this->messages[] = lang('app_user_save_success');
+
+					$this->session->set_flashdata('messages', ['Perfil completado com sucesso']);
+	        		return redirect('proposicoes');
+
 		        } else {
 		        	$this->errors[] = sprintf(lang('app_user_save_error'),$this->config->item('contact_email'));;
 				}
@@ -104,7 +108,10 @@ class User extends MY_Controller {
 		} else {
 			$this->errors[] = sprintf(lang('app_confirmation_error'),$this->config->item('contact_email'));
 		}
-		$this->load->view('welcome/home',$this->get_data());
+
+
+		$this->session->set_flashdata('messages', ['Perfil confirmado com sucesso']);
+		redirect(base_url('user/settings/'));
 	}
 	
 	/**
