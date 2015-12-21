@@ -34,14 +34,14 @@ class User_model extends MY_Model
     public $email;
     public $name = null;
     public $password = null;
-    public $avatar;
+    public $avatar_id;
     public $alias;
     public $bio;
     public $city;
     public $roles = self::ROLE_COLABORADOR;
     public $confirmation;
-    public $dateadd = 0;
-    public $dateupdate = 0;
+    public $created_at = 0;
+    public $updated_at = 0;
     public $status = self::STATUS_DISABLE;
 
 
@@ -89,9 +89,9 @@ class User_model extends MY_Model
      */
     public function get_avatar($style = null)
     {
-        if (!is_null($this->avatar)) {
+        if (!is_null($this->avatar_id)) {
             $this->load->model('Media_model');
-            $avatar = $this->Media_model->get_by_id($this->avatar);
+            $avatar = $this->Media_model->get_by_id($this->avatar_id);
             if ($path = $avatar->get_path($style)) {
                 return $path;
             }
@@ -151,8 +151,8 @@ class User_model extends MY_Model
             return false;
         }
 
-        $this->dateadd = gmdate("Y-m-d H:i:s");
-        $this->dateupdate = gmdate("Y-m-d H:i:s");
+        $this->created_at = gmdate("Y-m-d H:i:s");
+        $this->updated_at = gmdate("Y-m-d H:i:s");
 
         $res = parent::insert();
 
@@ -170,7 +170,7 @@ class User_model extends MY_Model
             return false;
         }
 
-        $this->dateupdate = gmdate("Y-m-d H:i:s");
+        $this->updated_at = gmdate("Y-m-d H:i:s");
 
         $res = parent::update();
 
@@ -308,7 +308,7 @@ class User_model extends MY_Model
 
         // removing old avatar
         if (!is_null($this->avatar)) {
-            $media_old = $this->Media_model->get_by_id($this->avatar);
+            $media_old = $this->Media_model->get_by_id($this->avatar_id);
             if ($media_old) {
                 $media_old->delete();
             }
@@ -318,7 +318,7 @@ class User_model extends MY_Model
         //saving new avatar
         $media = new Media_model();
         if ($media->insert($path)) {
-            $this->avatar = $media->id;
+            $this->avatar_id = $media->id;
             return $this->update();
         } else {
             return false;

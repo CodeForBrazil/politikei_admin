@@ -1,6 +1,4 @@
-alter table `proposicoes` ADD `tipo_descricao` varchar(255) NULL;
-alter table `proposicoes` ADD `numero` int NULL;
-alter table `proposicoes` ADD `ano` int NULL;
-alter table `proposicoes` ADD `autor_uf` varchar(255) NULL;
-alter table `proposicoes` ADD `autor_partido` varchar(255) NULL;
-alter table `proposicoes` ADD `autor_camara_id` int NULL;
+ALTER TABLE `politikei`.`users` ADD COLUMN `facebook_id` VARCHAR(255);
+ALTER TABLE `users` CHANGE `dateupdate` `updated_at` DATETIME NULL;
+ALTER TABLE `users` CHANGE `dateadd` `created_at` DATETIME NULL;
+ALTER TABLE `politikei`.`users` CHANGE COLUMN `avatar` `avatar_id` INT(11) NULL DEFAULT NULL COMMENT 'media.id' ;
