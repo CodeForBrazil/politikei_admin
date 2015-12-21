@@ -49,6 +49,8 @@
 
 <?php if (defined('ENVIRONMENT') && in_array(ENVIRONMENT,array('development'))) $this->output->enable_profiler(FALSE); ?>
     
+    
+    <script src="<?php echo base_url('/assets/js/analytics.js'); ?>" type="text/javascript"></script>
   </body>
 </html>
 
