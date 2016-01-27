@@ -60,7 +60,7 @@
                             <?php endif; ?> 
                         <?php endif; ?>
                         <a href="<?= site_url('/proposicoes/resumo/'.$proposicao->id) ?>" class="btn btn-default btn-sm">
-                            Ver resumo
+                            Ver detalhes
                         </a>
                     </div>
                     <div class="btn-group pull-right">

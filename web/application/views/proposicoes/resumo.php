@@ -14,7 +14,6 @@
                         <a href="<?= $proposicao->link ?>" target="_blank" class="btn btn-default" data-toggle="tooltip" title="Acessar Inteiro Teor">
                             <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Acessar Inteiro Teor
                         </a>
-
                         <a href="http://www.camara.gov.br/proposicoesWeb/fichadetramitacao?idProposicao=<?= $proposicao->camara_id ?>" target="_blank" class="btn btn-default">
                             Ver tramitação na câmara
                         </a>
@@ -61,13 +60,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="controls col-sm-6 col-sm-offset-2">
+                    <div class="btn-group controls col-sm-6 col-sm-offset-2">
                         <?php if($proposicao->pode_editar_resumo($current_user, $errors)): ?>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-default">
                             Salvar resumo
                         </button>
                         <?php endif; ?>
 
+                        <?php if($proposicao->pode_publicar($current_user, $errors)): ?>
+                        <a href="<?= site_url('/proposicoes/publicar/'.$proposicao->id) ?>" class="btn btn-primary post-link" data-confirm="Confirma que deseja publicar esta proposição?">
+                            Publicar
+                        </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
